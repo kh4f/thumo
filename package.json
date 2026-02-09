@@ -14,7 +14,8 @@
 		"build": "tsdown",
 		"build:watch": "tsdown --watch",
 		"build:prod": "tsdown --prod",
-		"lint": "eslint"
+		"lint": "eslint",
+		"release": "relion"
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.39.2",
@@ -22,6 +23,7 @@
 		"@types/node": "^25.2.2",
 		"eslint": "^9.39.2",
 		"jiti": "^2.6.1",
+		"relion": "^0.38.0",
 		"tsdown": "^0.20.3",
 		"tsx": "^4.21.0",
 		"typescript": "^5.9.3",

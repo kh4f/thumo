@@ -23,6 +23,9 @@ importers:
       jiti:
         specifier: ^2.6.1
         version: 2.6.1
+      relion:
+        specifier: ^0.38.0
+        version: 0.38.0
       tsdown:
         specifier: ^0.20.3
         version: 0.20.3(typescript@5.9.3)
@@ -792,6 +795,10 @@ packages:
 
   quansync@1.0.0:
     resolution: {integrity: sha512-5xZacEEufv3HSTPQuchrvV6soaiACMFnq1H8wkVioctoH3TRha9Sz66lOxRwPK/qZj7HPiSveih9yAyh98gvqA==}
+
+  relion@0.38.0:
+    resolution: {integrity: sha512-8oagLJD0OwDa8G0P7UbbFNR1lCVI0PJWOHWWP4xTD1MxsgX04SaP/DC9DG1DXUrST3RMW4arXNnMSi/rGSKPwA==}
+    hasBin: true
 
   resolve-from@4.0.0:
     resolution: {integrity: sha512-pb/MYmXstAkysRFx8piNI1tGFNQIFA3vkE3Gq4EuA1dF6gHp/+vgZqsCGJapvy8N3Q+4o7FwvquPJcnZ7RYy4g==}
@@ -1624,6 +1631,10 @@ snapshots:
   punycode@2.3.1: {}
 
   quansync@1.0.0: {}
+
+  relion@0.38.0:
+    dependencies:
+      semver: 7.7.4
 
   resolve-from@4.0.0: {}
 
