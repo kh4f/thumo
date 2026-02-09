@@ -1,6 +1,14 @@
 {
-	"type": "module",
+	"name": "thumo",
+	"version": "0.0.0",
+	"author": "kh4f <kh4f.dev@gmail.com>",
+	"license": "MIT",
+	"repository": "https://github.com/kh4f/thumo",
+	"bugs": "https://github.com/kh4f/thumo/issues",
+	"homepage": "https://github.com/kh4f/thumo#readme",
+	"keywords": ["thumo", "thumo-extension", "chrome-extension", "youtube-thumbnails", "youtube-extension", "youtube"],
 	"pnpm": { "onlyBuiltDependencies": ["esbuild"] },
+	"type": "module",
 	"devDependencies": {
 		"@eslint/js": "^9.39.2",
 		"@stylistic/eslint-plugin": "^5.8.0",
