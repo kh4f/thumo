@@ -9,6 +9,7 @@
 	"keywords": ["thumo", "thumo-extension", "chrome-extension", "youtube-thumbnails", "youtube-extension", "youtube"],
 	"pnpm": { "onlyBuiltDependencies": ["esbuild"] },
 	"type": "module",
+	"main": "dist/index.js",
 	"scripts": {
 		"build": "tsdown",
 		"build:watch": "tsdown --watch",
