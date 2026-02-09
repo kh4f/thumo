@@ -1,3 +1,9 @@
 {
-	"type": "module"
+	"type": "module",
+	"pnpm": { "onlyBuiltDependencies": ["esbuild"] },
+	"devDependencies": {
+		"@types/node": "^25.2.2",
+		"tsx": "^4.21.0",
+		"typescript": "^5.9.3"
+	}
 }
