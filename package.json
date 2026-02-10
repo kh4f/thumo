@@ -7,8 +7,19 @@
 	"repository": "https://github.com/kh4f/thumo",
 	"bugs": "https://github.com/kh4f/thumo/issues",
 	"homepage": "https://github.com/kh4f/thumo#readme",
-	"keywords": ["thumo", "thumo-extension", "chrome-extension", "youtube-thumbnails", "youtube-extension", "youtube"],
-	"pnpm": { "onlyBuiltDependencies": ["esbuild"] },
+	"keywords": [
+		"thumo",
+		"thumo-extension",
+		"chrome-extension",
+		"youtube-thumbnails",
+		"youtube-extension",
+		"youtube"
+	],
+	"pnpm": {
+		"onlyBuiltDependencies": [
+			"esbuild"
+		]
+	},
 	"type": "module",
 	"scripts": {
 		"build": "tsdown",
@@ -28,6 +39,7 @@
 		"@stylistic/eslint-plugin": "^5.8.0",
 		"@types/eslint-plugin-jsx-a11y": "^6.10.1",
 		"@types/node": "^25.2.2",
+		"@vitejs/plugin-react": "^5.1.4",
 		"eslint": "^9.39.2",
 		"eslint-plugin-jsx-a11y": "^6.10.2",
 		"eslint-plugin-react": "^7.37.5",
