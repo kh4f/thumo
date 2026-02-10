@@ -5,6 +5,7 @@ import eslintReact from '@eslint-react/eslint-plugin'
 import reactPlugin from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
 import jsxA11y from 'eslint-plugin-jsx-a11y'
+import rawstyle from 'rawstyle-eslint'
 import stylistic from '@stylistic/eslint-plugin'
 
 export default defineConfig([
@@ -34,6 +35,7 @@ export default defineConfig([
 			reactPlugin.configs.flat['jsx-runtime'],
 			reactHooks.configs.flat.recommended,
 			eslintReact.configs['recommended-type-checked'],
+			rawstyle.configs.recommended,
 		],
 	},
 	{
