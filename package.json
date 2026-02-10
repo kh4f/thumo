@@ -1,6 +1,7 @@
 {
 	"name": "thumo",
 	"version": "0.0.0",
+	"description": "🎴 Elegant YouTube Thumbnails & Layout Enhancer",
 	"author": "kh4f <kh4f.dev@gmail.com>",
 	"license": "MIT",
 	"repository": "https://github.com/kh4f/thumo",
