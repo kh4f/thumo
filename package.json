@@ -23,7 +23,7 @@
 	"type": "module",
 	"scripts": {
 		"build": "tsdown",
-		"build:watch": "tsdown --watch",
+		"build:watch": "tsdown --watch src",
 		"build:prod": "tsdown --prod",
 		"lint": "eslint",
 		"release": "relion"
