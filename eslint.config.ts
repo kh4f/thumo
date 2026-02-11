@@ -40,7 +40,7 @@ export default defineConfig([
 	},
 	{
 		name: 'Stylistic Rules',
-		files: ['**/*.ts'],
+		files: ['**/*.ts?(x)'],
 		extends: [stylistic.configs.recommended],
 		rules: {
 			'@stylistic/no-tabs': 'off',
