@@ -1,10 +1,12 @@
 import { createRoot, type Root } from 'react-dom/client'
 import { ThumbnailWidget } from '@/components'
-import { log, injectCss, waitForSidebar } from '@/utils'
+import { log, injectCss, waitForSidebar, getPageType } from '@/utils'
+import type { PageType } from '@/types'
 
 log('Content script is running')
 void injectCss()
 
+let pageType: PageType = 'unknown'
 let prevUrl: string
 let widgetEl: HTMLElement | null = null
 let widgetRoot: Root | null = null
@@ -17,24 +19,24 @@ const onTabLoad = async (tabInfo: chrome.tabs.Tab) => {
 	const url = tabInfo.url ?? ''
 	log('Tab updated:', url)
 
+	pageType = getPageType(url)
+
 	if (url === prevUrl) {
 		log('URL unchanged, skipping')
 		return
 	}
 	prevUrl = url
 
-	if (!url.includes('/watch?v=')) {
-		delete document.body.dataset.pageType
-		log('Not a watch page, skipping')
-		return
+	log('Page type:', pageType)
+	document.body.dataset.pageType = pageType
+
+	if (pageType === 'watch') {
+		const videoId = /watch\?v=([^&]+)/.exec(url)![1]
+		log('Video ID:', videoId)
+
+		const sidebar = await waitForSidebar()
+		renderWidget(videoId, sidebar)
 	}
-	document.body.dataset.pageType = 'video'
-
-	const videoId = /watch\?v=([^&]+)/.exec(url)![1]
-	log('Video ID:', videoId)
-
-	const sidebar = await waitForSidebar()
-	renderWidget(videoId, sidebar)
 }
 
 const renderWidget = (videoId: string, sidebar: HTMLElement) => {
@@ -53,7 +55,7 @@ const renderWidget = (videoId: string, sidebar: HTMLElement) => {
 }
 
 void gcss`
-	.watch-root-element #secondary {
+	body[data-page-type="watch"] .watch-root-element #secondary {
 		display: flex;
 		flex-direction: column;
 

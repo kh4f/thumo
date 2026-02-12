@@ -1,3 +1,5 @@
+import type { PageType } from '@/types'
+
 export const log = (...args: unknown[]) => console.log('%cTHUMO', `
 	color: #00ccff;
 	background: #21202a;
@@ -14,6 +16,13 @@ export const injectCss = async () => {
 	const styleSheet = new CSSStyleSheet()
 	styleSheet.replaceSync(css)
 	document.adoptedStyleSheets = [...document.adoptedStyleSheets, styleSheet]
+}
+
+export const getPageType = (url: string): PageType => {
+	if (url.includes('/watch?v=')) return 'watch'
+	if (url.includes('/feed/playlists')) return 'playlists'
+	if (/\.youtube\.com\/?$/.test(url)) return 'home'
+	return 'unknown'
 }
 
 export const waitForSidebar = (): Promise<HTMLElement> => {
