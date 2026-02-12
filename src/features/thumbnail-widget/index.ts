@@ -1,2 +1,2 @@
-export { mountThumbnailWidget } from './mount'
 export { ThumbnailWidget } from './widget'
+export { mountThumbnailWidget } from './mount'
