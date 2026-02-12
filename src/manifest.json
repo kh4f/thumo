@@ -3,6 +3,8 @@
 	"name": "Thumo",
 	"version": "0.0.0",
 	"description": "🎴 Elegant YouTube UI Enhancer",
+	"icons": { "128": "assets/icon-128.png" },
+	"action": { "default_icon": "assets/icon-128.png" },
 	"permissions": ["tabs", "scripting"],
 	"background": { "service_worker": "background.js" },
 	"content_scripts": [{ "matches": ["https://www.youtube.com/*"], "js": ["content.js"] }],

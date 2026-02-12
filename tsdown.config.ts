@@ -7,7 +7,7 @@ const isProd = process.argv.includes('--prod')
 export default {
 	platform: 'browser',
 	entry: 'src/{content.tsx,background.ts}',
-	copy: 'src/manifest.json',
+	copy: ['src/manifest.json', 'src/assets'],
 	minify: isProd,
 	sourcemap: isProd ? false : 'inline',
 	inlineOnly: false,
