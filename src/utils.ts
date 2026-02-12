@@ -25,23 +25,19 @@ export const getPageType = (url: string): PageType => {
 	return 'unknown'
 }
 
-export const waitForSidebar = (): Promise<HTMLElement> => {
+export const waitForEl = (selector: string): Promise<HTMLElement> => {
 	const ytdApp = document.querySelector('body > ytd-app')!
-	const getSidebar = () => ytdApp.querySelector<HTMLElement>('.watch-root-element #secondary')
+	const getElement = () => ytdApp.querySelector<HTMLElement>(selector)
 
-	let sidebar = getSidebar()
-	if (sidebar) {
-		log('Sidebar already loaded:', sidebar)
-		return Promise.resolve(sidebar)
-	}
+	let element = getElement()
+	if (element) return Promise.resolve(element)
 
 	return new Promise(resolve => {
 		new MutationObserver((_, obs) => {
-			sidebar = getSidebar()
-			if (sidebar) {
-				log('Sidebar loaded:', sidebar)
+			element = getElement()
+			if (element) {
 				obs.disconnect()
-				resolve(sidebar)
+				resolve(element)
 			}
 		}).observe(ytdApp, { childList: true, subtree: true })
 	})
