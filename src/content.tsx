@@ -7,7 +7,7 @@ log('Content script is running')
 void injectCss()
 
 let pageType: PageType = 'unknown'
-let prevUrl: string
+let prevUrl = ''
 
 chrome.runtime.onMessage.addListener((message: { action: string, tabInfo: chrome.tabs.Tab }) => {
 	if (message.action === 'tab-updated') void onTabLoad(message.tabInfo)
