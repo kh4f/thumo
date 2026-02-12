@@ -66,8 +66,8 @@ importers:
         specifier: ^19.2.4
         version: 19.2.4(react@19.2.4)
       relion:
-        specifier: ^0.38.0
-        version: 0.38.0
+        specifier: ^0.39.1
+        version: 0.39.1
       tsdown:
         specifier: ^0.20.3
         version: 0.20.3(typescript@5.9.3)
@@ -1973,8 +1973,8 @@ packages:
     resolution: {integrity: sha512-dYqgNSZbDwkaJ2ceRd9ojCGjBq+mOm9LmtXnAnEGyHhN/5R7iDW2TRw3h+o/jCFxus3P2LfWIIiwowAjANm7IA==}
     engines: {node: '>= 0.4'}
 
-  relion@0.38.0:
-    resolution: {integrity: sha512-8oagLJD0OwDa8G0P7UbbFNR1lCVI0PJWOHWWP4xTD1MxsgX04SaP/DC9DG1DXUrST3RMW4arXNnMSi/rGSKPwA==}
+  relion@0.39.1:
+    resolution: {integrity: sha512-Se1XgUsPolCExkba4qk1O/EC2iKoTLMqVNmsMzWEdijEfwNZ7lSgGrbd/jz6M7AJn7yXqUp4fHYCwvCLwZuzTA==}
     hasBin: true
 
   resolve-from@4.0.0:
@@ -4314,7 +4314,7 @@ snapshots:
       gopd: 1.2.0
       set-function-name: 2.0.2
 
-  relion@0.38.0:
+  relion@0.39.1:
     dependencies:
       semver: 7.7.4
 
