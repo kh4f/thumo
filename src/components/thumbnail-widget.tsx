@@ -7,7 +7,6 @@ export const ThumbnailWidget = ({ url }: { url: string }) => {
 }
 
 const link = css`
-	width: 100%;
 	display: flex;
 	justify-content: center;
 
