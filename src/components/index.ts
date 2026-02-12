@@ -1,0 +1,1 @@
+export { ThumbnailWidget } from './thumbnail-widget'
