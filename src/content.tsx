@@ -1,5 +1,6 @@
 import { log, injectCss, waitForSidebar, getPageType } from '@/utils'
 import { mountThumbnailWidget } from '@/features/thumbnail-widget'
+import { mountPlaylistsWidget } from '@/features/playlist-sorting'
 import type { PageType } from '@/types'
 
 log('Content script is running')
@@ -27,12 +28,19 @@ const onTabLoad = async (tabInfo: chrome.tabs.Tab) => {
 	log('Page type:', pageType)
 	document.body.dataset.pageType = pageType
 
-	if (pageType === 'watch') {
-		const videoId = /watch\?v=([^&]+)/.exec(url)![1]
-		log('Video ID:', videoId)
+	switch (pageType) {
+		case 'watch': {
+			const videoId = /watch\?v=([^&]+)/.exec(url)![1]
+			log('Video ID:', videoId)
 
-		const sidebar = await waitForSidebar()
-		mountThumbnailWidget(videoId, sidebar)
+			const sidebar = await waitForSidebar()
+			mountThumbnailWidget(videoId, sidebar)
+			break
+		}
+		case 'playlists': {
+			await mountPlaylistsWidget()
+			break
+		}
 	}
 }
 

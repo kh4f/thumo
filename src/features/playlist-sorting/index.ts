@@ -1,0 +1,1 @@
+export { mountPlaylistsWidget } from './mount'
