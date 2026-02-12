@@ -1,4 +1,4 @@
-import { log, injectCss, waitForEl, getPageType } from '@/utils'
+import { log, injectCss, getPageType } from '@/utils'
 import { mountThumbnailWidget } from '@/features/thumbnail-widget'
 import { mountPlaylistsWidget } from '@/features/playlist-sorting'
 import type { PageType } from '@/types'
@@ -32,9 +32,7 @@ const onTabLoad = async (tabInfo: chrome.tabs.Tab) => {
 		case 'watch': {
 			const videoId = /watch\?v=([^&]+)/.exec(url)![1]
 			log('Video ID:', videoId)
-
-			const sidebar = await waitForEl('.watch-root-element #secondary')
-			mountThumbnailWidget(videoId, sidebar)
+			await mountThumbnailWidget(videoId)
 			break
 		}
 		case 'playlists': {

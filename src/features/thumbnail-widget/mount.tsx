@@ -1,11 +1,14 @@
 import { createRoot, type Root } from 'react-dom/client'
-import { log } from '@/utils'
+import { log, waitForEl } from '@/utils'
 import { ThumbnailWidget } from './widget'
 
 let widgetEl: HTMLElement | null = null
 let widgetRoot: Root | null = null
 
-export const mountThumbnailWidget = (videoId: string, sidebar: HTMLElement) => {
+export const mountThumbnailWidget = async (videoId: string) => {
+	const sidebar = await waitForEl('.watch-root-element #secondary')
+	log('Sidebar element found:', sidebar)
+
 	const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
 	log('Thumbnail URL:', thumbnailUrl)
 
