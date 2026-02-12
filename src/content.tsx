@@ -35,3 +35,11 @@ const onTabLoad = async (tabInfo: chrome.tabs.Tab) => {
 		mountThumbnailWidget(videoId, sidebar)
 	}
 }
+
+void gcss`
+	body[data-page-type="home"] {
+		ytd-rich-item-renderer {
+			width: 300px;
+		}
+	}
+`
