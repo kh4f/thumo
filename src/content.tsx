@@ -1,6 +1,5 @@
+import { mountThumbnailWidget, mountPlaylistsWidget } from '@/features'
 import { log, injectCss, getPageType } from '@/utils'
-import { mountThumbnailWidget } from '@/features/thumbnail-widget'
-import { mountPlaylistsWidget } from '@/features/playlist-sorting'
 import type { PageType } from '@/types'
 
 log('Content script is running')

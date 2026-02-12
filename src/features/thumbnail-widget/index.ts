@@ -1,1 +1,0 @@
-export { mountThumbnailWidget } from './mount'
