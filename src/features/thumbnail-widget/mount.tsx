@@ -21,18 +21,3 @@ export const mountThumbnailWidget = async (videoId: string) => {
 	widgetRoot.render(<ThumbnailWidget url={thumbnailUrl}/>)
 	log('Thumbnail widget mounted:', widgetEl)
 }
-
-void gcss`
-	body[data-page-type="watch"] .watch-root-element #secondary {
-		display: flex;
-		flex-direction: column;
-
-		#thumo-widget {
-			order: -1;
-			overflow: hidden;
-			margin-bottom: 16px;
-			border-radius: 12px;
-			border: 1px solid hsla(0, 0%, 100%, 0.1);
-		}
-	}
-`

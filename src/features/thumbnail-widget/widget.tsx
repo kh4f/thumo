@@ -12,3 +12,18 @@ const link = css`
 
 	img { width: 100%; }
 `
+
+void gcss`
+	.watch-root-element #secondary {
+		display: flex;
+		flex-direction: column;
+
+		#thumo-widget {
+			order: -1;
+			overflow: hidden;
+			margin-bottom: 16px;
+			border-radius: 12px;
+			border: 1px solid hsla(0, 0%, 100%, 0.1);
+		}
+	}
+`
