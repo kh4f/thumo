@@ -1,50 +1,49 @@
-export const Playlist = () => {
-	return <div className={playlist}></div>
+import { useRef, useEffect } from 'react'
+
+export const Playlist = ({ el }: { el: Element }) => {
+	const ref = useRef<HTMLDivElement>(null)
+
+	useEffect(() => {
+		if (ref.current) ref.current.appendChild(el)
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
+
+	return <div ref={ref}></div>
 }
 
-const playlist = css`
-	height: 137px;
-	border: 1px solid rgba(0, 255, 13, 0.692);
-`
-
-export const PlaylistsWidget = () => {
-	return (
-		<>
-			<Playlist/>
-			<Playlist/>
-			<Playlist/>
-			<Playlist/>
-			<Playlist/>
-			<Playlist/>
-			<Playlist/>
-			<Playlist/>
-			<Playlist/>
-		</>
-	)
-}
+export const PlaylistsWidget = ({ playlists }: { playlists: Element[] }) => (
+	<>
+		{playlists.map(el => <Playlist key={crypto.randomUUID()} el={el}/>)}
+	</>
+)
 
 void gcss`
-	#thumo-playlists-widget {
-		width: 100%;
-		border: 1px solid red;
-		padding: 24px;
-		display: grid;
-		grid-template-columns: repeat(6, minmax(150px, 200px));
-		justify-content: start;
-		gap: 19px 16px;
+	body[data-page-type="playlists"] {
+		#thumo-playlists-widget {
+			width: 100%;
+			border: 1px solid #888888;
+			padding: 24px;
+			display: grid;
+			grid-template-columns: repeat(6, minmax(150px, 200px));
+			justify-content: start;
+			gap: 19px 16px;
+			--inside-thumo-widget: 1;
 
-		&, * {
-			box-sizing: border-box;
+			&, * {
+				box-sizing: border-box;
+			}
 		}
-	}
 
-	#contents.ytd-rich-grid-renderer {
-		box-sizing: border-box;
-		padding-left: 24px;
-		gap: 19px 16px;
+		#contents.ytd-rich-grid-renderer {
+			box-sizing: border-box;
+			padding-left: 24px;
+			gap: 19px 16px;
+			/* display: none; */
+		}
 
-		ytd-rich-item-renderer {
-			width: 200px;
+		:is(#contents.ytd-rich-grid-renderer, #thumo-playlists-widget) ytd-rich-item-renderer {
+			display: block;
+			width: if(var(--inside-thumo-widget): 100%; else: 200px);
 			margin: 6px 0 0 0;
 			border-radius: 12px;
 			background-color: #ffffff05;

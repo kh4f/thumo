@@ -10,11 +10,14 @@ export const mountPlaylistsWidget = async () => {
 	log('Playlists container:', plsContainer)
 
 	widgetEl ??= document.getElementById('thumo-playlists-widget')
-		?? Object.assign(document.createElement('div'), { id: 'thumo-playlists-widget' })
+		?? Object.assign(document.createElement('div'), { id: 'thumo-playlists-widget', class: 'style-scope ytd-rich-grid-renderer' })
 
 	if (widgetEl.parentElement !== plsContainer) plsContainer.before(widgetEl)
 	widgetRoot ??= createRoot(widgetEl)
 
-	widgetRoot.render(<PlaylistsWidget/>)
-	log('Playlists widget mounted:', widgetEl)
+	setTimeout(() => {
+		const pls = document.querySelectorAll('ytd-rich-item-renderer')
+		widgetRoot!.render(<PlaylistsWidget playlists={[...pls]}/>)
+		log('Playlists widget mounted:', widgetEl)
+	}, 2000)
 }
