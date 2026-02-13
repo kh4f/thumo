@@ -18,7 +18,7 @@ void gcss`
 		display: flex;
 		flex-direction: column;
 
-		#thumo-widget {
+		#thumo-thumbnail-widget {
 			order: -1;
 			overflow: hidden;
 			margin-bottom: 16px;

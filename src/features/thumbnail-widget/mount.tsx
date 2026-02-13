@@ -12,8 +12,8 @@ export const mountThumbnailWidget = async (videoId: string) => {
 	const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
 	log('Thumbnail URL:', thumbnailUrl)
 
-	widgetEl ??= document.getElementById('thumo-widget')
-		?? Object.assign(document.createElement('div'), { id: 'thumo-widget' })
+	widgetEl ??= document.getElementById('thumo-thumbnail-widget')
+		?? Object.assign(document.createElement('div'), { id: 'thumo-thumbnail-widget' })
 
 	if (widgetEl.parentElement !== sidebar) sidebar.prepend(widgetEl)
 	widgetRoot ??= createRoot(widgetEl)
