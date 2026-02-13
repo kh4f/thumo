@@ -18,9 +18,3 @@ export const mountPlaylistsWidget = async () => {
 	widgetRoot.render(<PlaylistsWidget/>)
 	log('Playlists widget mounted:', widgetEl)
 }
-
-void gcss`
-	/* body[data-page-type="playlists"] {
-
-	} */
-`
