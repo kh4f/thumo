@@ -43,7 +43,7 @@ void gcss`
 
 		:is(#contents.ytd-rich-grid-renderer, #thumo-playlists-widget) ytd-rich-item-renderer {
 			display: block;
-			width: if(var(--inside-thumo-widget): 100%; else: 200px);
+			width: if(style(--inside-thumo-widget: 1): 100%; else: 200px);
 			margin: 6px 0 0 0;
 			border-radius: 12px;
 			background-color: #ffffff05;
