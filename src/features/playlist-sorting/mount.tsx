@@ -2,18 +2,18 @@ import { createRoot, type Root } from 'react-dom/client'
 import { log, waitForEl } from '@/utils'
 import { PlaylistsWidget } from './widget'
 
-let widgetEl: HTMLElement | null = null
 let widgetRoot: Root | null = null
 
 export const mountPlaylistsWidget = async () => {
 	const plsContainer = await waitForEl('#contents.ytd-rich-grid-renderer')
 	log('Playlists container:', plsContainer)
 
-	widgetEl ??= document.getElementById('thumo-playlists-widget')
-		?? Object.assign(document.createElement('div'), { id: 'thumo-playlists-widget', class: 'style-scope ytd-rich-grid-renderer' })
+	let widgetEl = document.getElementById('thumo-playlists-widget')
+	if (widgetEl) widgetRoot?.unmount()
+	else widgetEl = Object.assign(document.createElement('div'), { id: 'thumo-playlists-widget', class: 'style-scope ytd-rich-grid-renderer' })
 
 	if (widgetEl.parentElement !== plsContainer) plsContainer.before(widgetEl)
-	widgetRoot ??= createRoot(widgetEl)
+	widgetRoot = createRoot(widgetEl)
 
 	setTimeout(() => {
 		const pls = document.querySelectorAll('ytd-rich-item-renderer:has(yt-collection-thumbnail-view-model)')
