@@ -16,7 +16,7 @@ export const mountPlaylistsWidget = async () => {
 	widgetRoot ??= createRoot(widgetEl)
 
 	setTimeout(() => {
-		const pls = document.querySelectorAll('ytd-rich-item-renderer')
+		const pls = document.querySelectorAll('ytd-rich-item-renderer:has(yt-collection-thumbnail-view-model)')
 		widgetRoot!.render(<PlaylistsWidget playlists={[...pls]}/>)
 		log('Playlists widget mounted:', widgetEl)
 	}, 2000)
