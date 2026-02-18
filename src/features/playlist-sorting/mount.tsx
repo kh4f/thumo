@@ -22,3 +22,21 @@ export const mountPlaylistsWidget = async () => {
 		log('Playlists widget mounted:', widgetEl)
 	}, 2000)
 }
+
+const handlePlaylistLoad = (el: Element) => {
+	console.log('New playlist item added:', el)
+}
+
+const observePlaylistNodes = () => {
+	const currentPls = document.querySelectorAll('ytd-rich-item-renderer')
+	currentPls.forEach(handlePlaylistLoad)
+	new MutationObserver(muts => {
+		for (const mut of muts)
+			for (const node of mut.addedNodes) {
+				if (!(node instanceof Element)) continue
+				if (node.matches('ytd-rich-item-renderer')) handlePlaylistLoad(node)
+			}
+	}).observe(document.body, { childList: true, subtree: true })
+}
+
+observePlaylistNodes()
