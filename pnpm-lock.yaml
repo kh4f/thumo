@@ -16,7 +16,7 @@ importers:
         version: 10.0.1(eslint@9.39.2(jiti@2.6.1))
       '@rawstyle/vite':
         specifier: ^0.3.2
-        version: 0.3.2(rawstyle@0.4.2)(rolldown-vite@7.3.1(@types/node@25.2.3)(esbuild@0.27.3)(jiti@2.6.1)(tsx@4.21.0))
+        version: 0.3.2(rawstyle@0.5.0)(rolldown-vite@7.3.1(@types/node@25.2.3)(esbuild@0.27.3)(jiti@2.6.1)(tsx@4.21.0))
       '@stylistic/eslint-plugin':
         specifier: ^5.8.0
         version: 5.8.0(eslint@9.39.2(jiti@2.6.1))
@@ -54,11 +54,11 @@ importers:
         specifier: ^2.6.1
         version: 2.6.1
       rawstyle:
-        specifier: ^0.4.2
-        version: 0.4.2
+        specifier: ^0.5.0
+        version: 0.5.0
       rawstyle-eslint:
         specifier: ^0.1.2
-        version: 0.1.2(@eslint/core@0.17.0)(rawstyle@0.4.2)
+        version: 0.1.2(@eslint/core@0.17.0)(rawstyle@0.5.0)
       react:
         specifier: ^19.2.4
         version: 19.2.4
@@ -1946,8 +1946,8 @@ packages:
       '@eslint/core': '*'
       rawstyle: '>=0.4.2'
 
-  rawstyle@0.4.2:
-    resolution: {integrity: sha512-dbKRDelYgCMAx6dBfuIwqHN77rmlkD/cPPs8Yct3rxwwIoeL33z79kftpr5UNaP4LAhB9EsGRniJxRZ1QknPaQ==}
+  rawstyle@0.5.0:
+    resolution: {integrity: sha512-LVZxGFt+KEP2P3IEMGaRfuJdAyGfl9e/4Ai1TGKvFOIVdFc6lW7dN2oIZbNTuFyN/p4bJbjxyD1QF45Misf3ng==}
 
   react-dom@19.2.4:
     resolution: {integrity: sha512-AXJdLo8kgMbimY95O2aKQqsz2iWi9jMgKJhRBAxECE4IFxfcazB2LmzloIoibJI3C12IlY20+KFaLv+71bUJeQ==}
@@ -2827,9 +2827,9 @@ snapshots:
     dependencies:
       quansync: 1.0.0
 
-  '@rawstyle/vite@0.3.2(rawstyle@0.4.2)(rolldown-vite@7.3.1(@types/node@25.2.3)(esbuild@0.27.3)(jiti@2.6.1)(tsx@4.21.0))':
+  '@rawstyle/vite@0.3.2(rawstyle@0.5.0)(rolldown-vite@7.3.1(@types/node@25.2.3)(esbuild@0.27.3)(jiti@2.6.1)(tsx@4.21.0))':
     dependencies:
-      rawstyle: 0.4.2
+      rawstyle: 0.5.0
       rolldown-vite: 7.3.1(@types/node@25.2.3)(esbuild@0.27.3)(jiti@2.6.1)(tsx@4.21.0)
 
   '@rolldown/binding-android-arm64@1.0.0-beta.53':
@@ -4273,12 +4273,12 @@ snapshots:
 
   quansync@1.0.0: {}
 
-  rawstyle-eslint@0.1.2(@eslint/core@0.17.0)(rawstyle@0.4.2):
+  rawstyle-eslint@0.1.2(@eslint/core@0.17.0)(rawstyle@0.5.0):
     dependencies:
       '@eslint/core': 0.17.0
-      rawstyle: 0.4.2
+      rawstyle: 0.5.0
 
-  rawstyle@0.4.2:
+  rawstyle@0.5.0:
     dependencies:
       '@oxc-parser/binding-wasm32-wasi': 0.112.0
       oxc-parser: 0.112.0
