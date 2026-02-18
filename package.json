@@ -36,7 +36,7 @@
 		"eslint-plugin-react-hooks": "^7.0.1",
 		"jiti": "^2.6.1",
 		"rawstyle": "^0.4.2",
-		"rawstyle-eslint": "^0.1.1",
+		"rawstyle-eslint": "^0.1.2",
 		"relion": "^0.39.1",
 		"tsdown": "^0.20.3",
 		"tsx": "^4.21.0",

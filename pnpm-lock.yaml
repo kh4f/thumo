@@ -57,8 +57,8 @@ importers:
         specifier: ^0.4.2
         version: 0.4.2
       rawstyle-eslint:
-        specifier: ^0.1.1
-        version: 0.1.1(@eslint/core@0.17.0)(rawstyle@0.4.2)
+        specifier: ^0.1.2
+        version: 0.1.2(@eslint/core@0.17.0)(rawstyle@0.4.2)
       react:
         specifier: ^19.2.4
         version: 19.2.4
@@ -1940,11 +1940,11 @@ packages:
   quansync@1.0.0:
     resolution: {integrity: sha512-5xZacEEufv3HSTPQuchrvV6soaiACMFnq1H8wkVioctoH3TRha9Sz66lOxRwPK/qZj7HPiSveih9yAyh98gvqA==}
 
-  rawstyle-eslint@0.1.1:
-    resolution: {integrity: sha512-BsLpOvY+1MQnsLA/WrC6h0uE0HyokbDNHNGxeTCSroL0KFaXC5McREIWg2jScC0KGEo8QDjtmZS1gwmWyTihJQ==}
+  rawstyle-eslint@0.1.2:
+    resolution: {integrity: sha512-2K39e/x9TjIb6us0LhI/SQv43XgyuQa2aLmxXiCsj0M6y7ub3sfhBqVsBx1oT3I3aMgJ2m5Lv9ztInTVRasuBQ==}
     peerDependencies:
       '@eslint/core': '*'
-      rawstyle: '>=0.4'
+      rawstyle: '>=0.4.2'
 
   rawstyle@0.4.2:
     resolution: {integrity: sha512-dbKRDelYgCMAx6dBfuIwqHN77rmlkD/cPPs8Yct3rxwwIoeL33z79kftpr5UNaP4LAhB9EsGRniJxRZ1QknPaQ==}
@@ -4273,7 +4273,7 @@ snapshots:
 
   quansync@1.0.0: {}
 
-  rawstyle-eslint@0.1.1(@eslint/core@0.17.0)(rawstyle@0.4.2):
+  rawstyle-eslint@0.1.2(@eslint/core@0.17.0)(rawstyle@0.4.2):
     dependencies:
       '@eslint/core': 0.17.0
       rawstyle: 0.4.2
