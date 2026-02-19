@@ -11,8 +11,7 @@ const Playlist = ({ el }: { el: Element }) => {
 
 	useEffect(() => {
 		if (ref.current) ref.current.appendChild(el)
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+	}, [el])
 
 	return <div ref={ref}></div>
 }
