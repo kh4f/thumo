@@ -23,6 +23,7 @@ export default defineConfig([
 		rules: {
 			'@typescript-eslint/restrict-template-expressions': 'off',
 			'@typescript-eslint/no-non-null-assertion': 'off',
+			'@typescript-eslint/no-unused-expressions': ['error', { allowShortCircuit: true }],
 			'@typescript-eslint/no-confusing-void-expression': ['error', { ignoreArrowShorthand: true }],
 		},
 	},
@@ -50,6 +51,7 @@ export default defineConfig([
 			'@stylistic/brace-style': ['error', '1tbs'],
 			'@stylistic/arrow-parens': ['error', 'as-needed'],
 			'@stylistic/eol-last': ['error', 'never'],
+			'@stylistic/max-statements-per-line': 'off',
 			'@stylistic/exp-list-style': 'error',
 			'@stylistic/jsx-indent-props': ['error', 'tab'],
 			'@stylistic/jsx-one-expression-per-line': 'off',

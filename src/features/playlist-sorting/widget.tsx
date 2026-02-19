@@ -4,14 +4,14 @@ export const Playlist = ({ el }: { el: Element }) => {
 	const ref = useRef<HTMLDivElement>(null)
 
 	useEffect(() => {
-		if (ref.current) ref.current.appendChild(el)
+		if (ref.current) ref.current.appendChild(el.cloneNode(true))
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	return <div ref={ref}></div>
 }
 
-export const PlaylistsWidget = ({ playlists }: { playlists: Element[] }) => (
+export const Grid = ({ playlists }: { playlists: Element[] }) => (
 	<>
 		{playlists.map(el => <Playlist key={crypto.randomUUID()} el={el}/>)}
 	</>
