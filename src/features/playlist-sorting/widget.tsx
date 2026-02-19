@@ -1,89 +1,42 @@
-import { useRef, useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { log } from '@/utils'
+import { Grid } from './grid'
 
-export const Playlist = ({ el }: { el: Element }) => {
-	const ref = useRef<HTMLDivElement>(null)
+export const PlaylistsWidget = ({ plsContainer }: { plsContainer: Element }) => {
+	const [playlists, setPlaylists] = useState<HTMLElement[]>([])
+
+	const addPlaylist = (el: HTMLElement) => {
+		log('Playlist item added:', el)
+		const plUrl = el.querySelector('a')?.getAttribute('href')
+		if (!plUrl) return
+		const plId = new URL(plUrl, location.origin).searchParams.get('list')
+		log('ID:', plId)
+		if (!plId) return
+		el.dataset.id = plId
+		setPlaylists(prev => {
+			if (prev.some(e => e.dataset.id === plId)) return prev
+			return [...prev, el]
+		})
+	}
 
 	useEffect(() => {
-		if (ref.current) ref.current.appendChild(el.cloneNode(true))
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+		let observer: MutationObserver | null = null
 
-	return <div ref={ref}></div>
+		const existingPls = plsContainer.querySelectorAll<HTMLElement>('ytd-rich-item-renderer')
+		log('Existing playlist items found:', existingPls.length)
+		existingPls.forEach(addPlaylist)
+
+		observer = new MutationObserver(muts => {
+			for (const mut of muts)
+				for (const node of mut.addedNodes) {
+					if (!(node instanceof HTMLElement)) continue
+					if (node.matches('ytd-rich-item-renderer')) addPlaylist(node)
+				}
+		})
+		observer.observe(plsContainer, { childList: true, subtree: true })
+
+		return () => observer.disconnect()
+	}, [plsContainer])
+
+	return <Grid playlists={playlists}/>
 }
-
-export const Grid = ({ playlists }: { playlists: Element[] }) => (
-	<>
-		{playlists.map(el => <Playlist key={crypto.randomUUID()} el={el}/>)}
-	</>
-)
-
-void gcss`
-	#thumo-playlists-widget {
-		width: 100%;
-		border: 1px solid hsl(0, 0%, 50%);
-		padding: 24px;
-		display: grid;
-		grid-template-columns: repeat(6, minmax(150px, 200px));
-		justify-content: start;
-		gap: 19px 16px;
-		--inside-thumo-widget: 1;
-
-		&, * {
-			box-sizing: border-box;
-		}
-	}
-
-	body[data-page-type="playlists"] #contents.ytd-rich-grid-renderer {
-		box-sizing: border-box;
-		padding-left: 24px;
-		gap: 19px 16px;
-		/* display: none; */
-	}
-
-	:is(body[data-page-type="playlists"] #contents.ytd-rich-grid-renderer, #thumo-playlists-widget) ytd-rich-item-renderer {
-		display: block;
-		width: if(style(--inside-thumo-widget: 1): 100%; else: 200px);
-		margin: 6px 0 0 0;
-		border-radius: 12px;
-		background-color: #ffffff05;
-
-		> #content > yt-lockup-view-model > div > a {
-			padding-bottom: 0px;
-
-			.ytThumbnailViewModelAspectRatio16By9 {
-				padding-top: 48%;
-			}
-
-			+ div {
-				padding: 6px 12px;
-
-				h3 span {
-					font-size: 14px;
-				}
-
-				.yt-lockup-metadata-view-model__metadata {
-					position: absolute;
-					z-index: 2;
-					right: 0;
-					margin-right: -3px;
-					margin-top: -98px;
-
-					&:not(ytd-rich-item-renderer:has(.yt-spec-touch-feedback-shape--hovered)
-					.yt-lockup-metadata-view-model__metadata) {
-						display: none;
-					}
-
-					.yt-content-metadata-view-model__metadata-row {
-						justify-content: end;
-
-						span {
-							font-size: 9px;
-							line-height: 1;
-							color: hsl(0, 0%, 80%);
-						}
-					}
-				}
-			}
-		}
-	}
-`
