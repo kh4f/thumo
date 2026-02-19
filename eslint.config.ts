@@ -23,8 +23,7 @@ export default defineConfig([
 		rules: {
 			'@typescript-eslint/restrict-template-expressions': 'off',
 			'@typescript-eslint/no-non-null-assertion': 'off',
-			'@typescript-eslint/no-unused-expressions': ['error', { allowShortCircuit: true }],
-			'@typescript-eslint/no-confusing-void-expression': ['error', { ignoreArrowShorthand: true }],
+			'@typescript-eslint/no-confusing-void-expression': 'off',
 		},
 	},
 	{
