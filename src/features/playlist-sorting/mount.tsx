@@ -3,10 +3,17 @@ import { log, waitForEl } from '@/utils'
 import { PlaylistsWidget } from './widget'
 
 let widgetRoot: Root | null = null
+const playlists: Element[] = []
+let plsObserver: MutationObserver | null = null
 
 export const mountPlaylistsWidget = async () => {
 	const plsContainer = await waitForEl('#contents.ytd-rich-grid-renderer')
 	log('Playlists container:', plsContainer)
+	if (plsObserver) {
+		plsObserver.disconnect()
+		plsObserver = null
+	}
+	observePlaylistItems(plsContainer)
 
 	let widgetEl = document.getElementById('thumo-playlists-widget')
 	if (widgetEl) widgetRoot?.unmount()
@@ -23,20 +30,28 @@ export const mountPlaylistsWidget = async () => {
 	}, 2000)
 }
 
-const handlePlaylistLoad = (el: Element) => {
-	console.log('New playlist item added:', el)
+const handlePlaylistLoad = (el: HTMLElement) => {
+	log('Playlist item added:', el)
+	const plUrl = el.querySelector('a')?.getAttribute('href')
+	if (!plUrl) return
+	const plId = new URL(plUrl, location.origin).searchParams.get('list')
+	log('ID:', plId)
+	if (!plId) return
+	el.dataset.id = plId
+	playlists.push(el)
 }
 
-const observePlaylistNodes = () => {
-	const currentPls = document.querySelectorAll('ytd-rich-item-renderer')
+const observePlaylistItems = (target: Element) => {
+	const selector = '#contents.ytd-rich-grid-renderer ytd-rich-item-renderer'
+	const currentPls = document.querySelectorAll<HTMLElement>(selector)
 	currentPls.forEach(handlePlaylistLoad)
-	new MutationObserver(muts => {
+
+	plsObserver = new MutationObserver(muts => {
 		for (const mut of muts)
 			for (const node of mut.addedNodes) {
-				if (!(node instanceof Element)) continue
-				if (node.matches('ytd-rich-item-renderer')) handlePlaylistLoad(node)
+				if (!(node instanceof HTMLElement)) continue
+				if (node.matches(selector)) handlePlaylistLoad(node)
 			}
-	}).observe(document.body, { childList: true, subtree: true })
+	})
+	plsObserver.observe(target, { childList: true, subtree: true })
 }
-
-observePlaylistNodes()
