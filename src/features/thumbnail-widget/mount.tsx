@@ -1,9 +1,6 @@
-import { createRoot, type Root } from 'react-dom/client'
+import { createRoot } from 'react-dom/client'
 import { log, waitForEl } from '@/utils'
 import { ThumbnailWidget } from './widget'
-
-let widgetEl: HTMLElement | null = null
-let widgetRoot: Root | null = null
 
 export const mountThumbnailWidget = async (videoId: string) => {
 	const sidebar = await waitForEl('.watch-root-element #secondary')
@@ -12,12 +9,12 @@ export const mountThumbnailWidget = async (videoId: string) => {
 	const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
 	log('Thumbnail URL:', thumbnailUrl)
 
-	widgetEl ??= document.getElementById('thumo-thumbnail-widget')
-		?? Object.assign(document.createElement('div'), { id: 'thumo-thumbnail-widget' })
-
-	if (widgetEl.parentElement !== sidebar) sidebar.prepend(widgetEl)
-	widgetRoot ??= createRoot(widgetEl)
-
-	widgetRoot.render(<ThumbnailWidget url={thumbnailUrl}/>)
-	log('Thumbnail widget mounted:', widgetEl)
+	let widgetEl = document.getElementById('thumo-thumbnail-widget')
+	if (widgetEl) return log('Thumbnail widget already exists:', widgetEl)
+	else {
+		widgetEl = Object.assign(document.createElement('div'), { id: 'thumo-thumbnail-widget' })
+		sidebar.prepend(widgetEl)
+		createRoot(widgetEl).render(<ThumbnailWidget url={thumbnailUrl}/>)
+		log('Thumbnail widget mounted:', widgetEl)
+	}
 }
