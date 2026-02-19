@@ -1,19 +1,27 @@
 import { useEffect, useRef } from 'react'
 
-export const Grid = ({ playlists }: { playlists: Element[] }) => (
-	<>
-		{playlists.map(el => <Playlist key={crypto.randomUUID()} el={el}/>)}
-	</>
-)
+export const Grid = ({ pls }: { pls: HTMLElement[] }) => {
+	return (
+		<>
+			{pls.map(el => {
+				return <Cell key={Number(el.dataset.id)} el={el}/>
+			})}
+		</>
+	)
+}
 
-const Playlist = ({ el }: { el: Element }) => {
+const Cell = ({ el }: { el: HTMLElement }) => {
+	return <div className="cell"><Playlist el={el}/></div>
+}
+
+const Playlist = ({ el }: { el: HTMLElement }) => {
 	const ref = useRef<HTMLDivElement>(null)
 
 	useEffect(() => {
-		if (ref.current) ref.current.appendChild(el)
+		if (ref.current) ref.current.replaceWith(el)
 	}, [el])
 
-	return <div ref={ref}></div>
+	return <div className="playlist" ref={ref}></div>
 }
 
 void gcss`

@@ -3,7 +3,7 @@ import { log } from '@/utils'
 import { Grid } from './grid'
 
 export const PlaylistsWidget = ({ plsContainer }: { plsContainer: Element }) => {
-	const [playlists, setPlaylists] = useState<HTMLElement[]>([])
+	const [pls, setPls] = useState<HTMLElement[]>([])
 
 	const addPlaylist = (el: HTMLElement) => {
 		log('Playlist item added:', el)
@@ -13,7 +13,7 @@ export const PlaylistsWidget = ({ plsContainer }: { plsContainer: Element }) => 
 		log('ID:', plId)
 		if (!plId) return
 		el.dataset.id = plId
-		setPlaylists(prev => {
+		setPls(prev => {
 			if (prev.some(e => e.dataset.id === plId)) return prev
 			return [...prev, el]
 		})
@@ -38,5 +38,5 @@ export const PlaylistsWidget = ({ plsContainer }: { plsContainer: Element }) => 
 		return () => observer.disconnect()
 	}, [plsContainer])
 
-	return <Grid playlists={playlists}/>
+	return <Grid pls={pls}/>
 }
