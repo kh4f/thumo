@@ -70,6 +70,8 @@ const Playlist = ({ el }: { el: HTMLElement }) => {
 
 	const handlePointerUp = (e: React.PointerEvent) => {
 		const pl = e.currentTarget as HTMLDivElement
+		// if the playlist was clicked without dragging, open it
+		if (!pl.style.position) open(pl.querySelector('a')!.href, e.button === 1 ? '_blank' : undefined)
 		if (!('dragging' in pl.dataset)) return
 
 		const dropCell = getClosestCell(pl)
@@ -184,4 +186,7 @@ void gcss`
 			}
 		}
 	}
+
+	/* prevent preview from intercepting drag events */
+	ytd-video-preview { pointer-events: none !important; }
 `
