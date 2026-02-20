@@ -10,16 +10,12 @@ export const Grid = ({ pls }: { pls: HTMLElement[] }) => {
 	return (
 		<>
 			{Array.from({ length: 18 }, (_, i) => (
-				<Cell key={i}>
+				<div className="cell" key={i}>
 					{pls[i] && <Playlist el={pls[i]}/> }
-				</Cell>
+				</div>
 			))}
 		</>
 	)
-}
-
-const Cell = ({ children }: { children: React.ReactNode }) => {
-	return <div className="cell">{children}</div>
 }
 
 const getClosestCell = (pl: HTMLDivElement) => {
