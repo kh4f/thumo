@@ -156,6 +156,7 @@ void gcss`
 
 				h3 span {
 					font-size: 14px;
+					white-space: nowrap;
 				}
 
 				.yt-lockup-metadata-view-model__metadata {
