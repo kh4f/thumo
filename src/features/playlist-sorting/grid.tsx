@@ -39,6 +39,7 @@ const Playlist = ({ el }: { el: HTMLElement }) => {
 
 	const handlePointerDown = (e: React.PointerEvent) => {
 		e.preventDefault() // prevent link dragging on title
+		if (['.yt-lockup-metadata-view-model__menu-button', '.yt-lockup-metadata-view-model__metadata'].some(selector => (e.target as HTMLElement).closest(selector))) return
 
 		const pl = e.currentTarget as HTMLDivElement
 		const rect = pl.getBoundingClientRect()
@@ -52,8 +53,6 @@ const Playlist = ({ el }: { el: HTMLElement }) => {
 	}
 
 	const handlePointerMove = (e: React.PointerEvent) => {
-		e.preventDefault()
-		e.stopPropagation()
 		const pl = e.currentTarget as HTMLDivElement
 		if (!('dragging' in pl.dataset)) return
 
@@ -71,9 +70,10 @@ const Playlist = ({ el }: { el: HTMLElement }) => {
 
 	const handlePointerUp = (e: React.PointerEvent) => {
 		const pl = e.currentTarget as HTMLDivElement
+		if (!('dragging' in pl.dataset)) return
 
 		const dropCell = getClosestCell(pl)
-		if (dropCell) {
+		if (dropCell && dropCell !== pl.parentElement) {
 			const replacePl = dropCell.firstElementChild
 			if (replacePl) pl.parentElement!.append(replacePl)
 			dropCell.append(pl)
