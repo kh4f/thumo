@@ -112,7 +112,8 @@ void gcss`
 		width: 100%;
 		padding: 24px;
 		display: grid;
-		grid-template-columns: repeat(6, minmax(150px, 200px));
+		grid-template-columns: repeat(7, minmax(150px, 200px));
+		grid-template-rows: repeat(auto-fill, minmax(100px, auto));
 		justify-content: start;
 		gap: 19px 16px;
 		--inside-thumo-widget: 1;
