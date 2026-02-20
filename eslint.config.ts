@@ -55,6 +55,9 @@ export default defineConfig([
 			'@stylistic/jsx-indent-props': ['error', 'tab'],
 			'@stylistic/jsx-one-expression-per-line': 'off',
 			'@stylistic/jsx-tag-spacing': ['error', { beforeClosing: 'never', beforeSelfClosing: 'never' }],
+			'@stylistic/jsx-wrap-multilines': 'off',
+			'@stylistic/jsx-closing-tag-location': 'off',
+			'@stylistic/jsx-closing-bracket-location': 'off',
 		},
 	},
 ])

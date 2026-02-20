@@ -7,15 +7,10 @@ export const Grid = ({ pls }: { pls: HTMLElement[] }) => {
 		cells = [...document.querySelectorAll<HTMLElement>('#thumo-playlists-widget .cell')]
 	})
 
-	return (
-		<>
-			{Array.from({ length: 18 }, (_, i) => (
-				<div className="cell" key={i}>
-					{pls[i] && <Playlist el={pls[i]}/> }
-				</div>
-			))}
-		</>
-	)
+	return (Array.from({ length: 18 }, (_, i) =>
+		<div className="cell" key={i}>
+			{pls[i] && <Playlist el={pls[i]}/>}
+		</div>))
 }
 
 const getClosestCell = (pl: HTMLDivElement) => {
@@ -91,17 +86,14 @@ const Playlist = ({ el }: { el: HTMLElement }) => {
 		})
 	}
 
-	return (
-		<div
-			className="playlist"
-			ref={ref}
-			data-id={el.dataset.id}
-			onPointerDown={handlePointerDown}
-			onPointerMove={handlePointerMove}
-			onPointerUp={handlePointerUp}
-		>
-		</div>
-	)
+	return <div
+		className="playlist"
+		ref={ref}
+		data-id={el.dataset.id}
+		onPointerDown={handlePointerDown}
+		onPointerMove={handlePointerMove}
+		onPointerUp={handlePointerUp}
+	></div>
 }
 
 void gcss`

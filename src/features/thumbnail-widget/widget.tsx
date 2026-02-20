@@ -1,10 +1,7 @@
-export const ThumbnailWidget = ({ url }: { url: string }) => {
-	return (
-		<a className={link} href={url} target="_blank" rel="noreferrer">
-			<img src={url} alt="thumbnail"/>
-		</a>
-	)
-}
+export const ThumbnailWidget = ({ url }: { url: string }) =>
+	<a className={link} href={url} target="_blank" rel="noreferrer">
+		<img src={url} alt="thumbnail"/>
+	</a>
 
 const link = css`
 	display: flex;
