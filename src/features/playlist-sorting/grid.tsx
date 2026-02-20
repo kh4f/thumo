@@ -128,7 +128,7 @@ void gcss`
 			}
 
 			.playlist {
-				user-select: none;
+				&, * { user-select: none; }
 			}
 		}
 	}
