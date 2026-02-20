@@ -38,8 +38,8 @@ const Playlist = ({ el }: { el: HTMLElement }) => {
 	const [offset, setOffset] = useState({ offsetX: 0, offsetY: 0 })
 
 	const handlePointerDown = (e: React.PointerEvent) => {
-		e.preventDefault()
-		e.stopPropagation()
+		e.preventDefault() // prevent link dragging on title
+
 		const pl = e.currentTarget as HTMLDivElement
 		const rect = pl.getBoundingClientRect()
 		const offsetX = e.clientX - rect.left
