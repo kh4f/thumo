@@ -83,7 +83,9 @@ const Playlist = ({ el }: { el: HTMLElement }) => {
 			dropCell.append(pl)
 		}
 
-		pl.style.position = 'static'
+		pl.style.position = ''
+		pl.style.width = ''
+		pl.style.zIndex = ''
 		delete pl.dataset.dragging
 		cells.forEach(cell => {
 			delete cell.dataset.dragSource
