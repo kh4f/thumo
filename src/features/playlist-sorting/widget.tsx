@@ -6,7 +6,6 @@ export const PlaylistsWidget = ({ plsContainer }: { plsContainer: Element }) => 
 	const [plEls, setPlEls] = useState<HTMLElement[]>([])
 
 	const addPlaylist = (el: HTMLElement) => {
-		log('Playlist element loaded:', el)
 		const plUrl = el.querySelector('a')?.getAttribute('href')
 		if (!plUrl) return
 		const plId = new URL(plUrl, location.origin).searchParams.get('list')
@@ -15,6 +14,7 @@ export const PlaylistsWidget = ({ plsContainer }: { plsContainer: Element }) => 
 		el.dataset.id = plId
 		setPlEls(prev => {
 			if (prev.some(e => e.dataset.id === plId)) return prev
+			log('Playlist element loaded:', el)
 			return [...prev, el]
 		})
 	}
