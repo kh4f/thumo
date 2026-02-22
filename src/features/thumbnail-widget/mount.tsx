@@ -1,6 +1,8 @@
-import { createRoot } from 'react-dom/client'
+import { createRoot, type Root } from 'react-dom/client'
 import { log, waitForEl } from '@/utils'
 import { ThumbnailWidget } from './widget'
+
+let root: Root | null = null
 
 export const mountThumbnailWidget = async (videoId: string) => {
 	const sidebar = await waitForEl('.watch-root-element #secondary')
@@ -10,11 +12,12 @@ export const mountThumbnailWidget = async (videoId: string) => {
 	log('Thumbnail URL:', thumbnailUrl)
 
 	let widgetEl = document.getElementById('thumo-thumbnail-widget')
-	if (widgetEl) return log('Thumbnail widget already exists:', widgetEl)
-	else {
+	if (!widgetEl) {
 		widgetEl = Object.assign(document.createElement('div'), { id: 'thumo-thumbnail-widget' })
 		sidebar.prepend(widgetEl)
-		createRoot(widgetEl).render(<ThumbnailWidget url={thumbnailUrl}/>)
+		root = createRoot(widgetEl)
 		log('Thumbnail widget mounted:', widgetEl)
 	}
+
+	root!.render(<ThumbnailWidget url={thumbnailUrl}/>)
 }
