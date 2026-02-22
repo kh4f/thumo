@@ -52,10 +52,14 @@ const Playlist = ({ el }: { el: HTMLElement }) => {
 	useEffect(() => ref.current?.append(el), [el])
 
 	const [offset, setOffset] = useState({ offsetX: 0, offsetY: 0 })
+	const skipPlOpenRef = useRef(false)
 
 	const handlePointerDown = (e: React.PointerEvent) => {
 		e.preventDefault() // prevent link dragging on title
-		if (['.yt-lockup-metadata-view-model__menu-button', '.yt-lockup-metadata-view-model__metadata'].some(selector => (e.target as HTMLElement).closest(selector))) return
+		if (['.yt-lockup-metadata-view-model__menu-button', '.yt-lockup-metadata-view-model__metadata'].some(selector => (e.target as HTMLElement).closest(selector))) {
+			skipPlOpenRef.current = true
+			return
+		}
 
 		const pl = e.currentTarget as HTMLDivElement
 		const rect = pl.getBoundingClientRect()
@@ -86,9 +90,11 @@ const Playlist = ({ el }: { el: HTMLElement }) => {
 
 	const handlePointerUp = (e: React.PointerEvent) => {
 		const pl = e.currentTarget as HTMLDivElement
-		// if the playlist was clicked without dragging, open it
-		if (!pl.style.position) open(pl.querySelector('a')!.href, e.button === 1 ? '_blank' : '_self')
-		if (!('dragging' in pl.dataset)) return
+		if (!('dragging' in pl.dataset)) {
+			if (skipPlOpenRef.current) skipPlOpenRef.current = false
+			else open(pl.querySelector('a')!.href, e.button === 1 ? '_blank' : '_self')
+			return
+		}
 
 		const dropCell = getClosestCell(pl)
 		if (dropCell && dropCell !== pl.parentElement) {
