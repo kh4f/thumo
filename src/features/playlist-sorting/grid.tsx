@@ -125,8 +125,8 @@ void gcss`
 		padding: 24px;
 		padding-top: calc(var(--rgap) + 10px);
 		display: grid;
-		grid-template-columns: repeat(var(--cols), minmax(150px, 200px));
-		grid-template-rows: repeat(var(--rows), minmax(100px, auto));
+		grid-template-columns: repeat(var(--cols), minmax(0, 200px));
+		grid-template-rows: repeat(var(--rows), minmax(0, auto));
 		justify-content: start;
 		gap: var(--rgap) var(--cgap);
 		--inside-thumo-widget: 1;
