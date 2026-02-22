@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { useSelector } from '@xstate/store-react'
 import { store } from '@/store'
 import { log } from '@/utils'
@@ -51,7 +51,7 @@ const Playlist = ({ el }: { el: HTMLElement }) => {
 	const ref = useRef<HTMLDivElement>(null)
 	useEffect(() => ref.current?.append(el), [el])
 
-	const [offset, setOffset] = useState({ offsetX: 0, offsetY: 0 })
+	const offsetRef = useRef({ offsetX: 0, offsetY: 0 })
 	const skipPlOpenRef = useRef(false)
 	const dragStartRef = useRef<{ x: number, y: number } | null>(null)
 
@@ -67,7 +67,7 @@ const Playlist = ({ el }: { el: HTMLElement }) => {
 		const rect = pl.getBoundingClientRect()
 		const offsetX = e.clientX - rect.left
 		const offsetY = e.clientY - rect.top
-		setOffset({ offsetX, offsetY })
+		offsetRef.current = { offsetX, offsetY }
 		dragStartRef.current = { x: e.clientX, y: e.clientY }
 		pl.dataset.dragging = ''
 		pl.parentElement!.dataset.dragSource = ''
@@ -89,8 +89,8 @@ const Playlist = ({ el }: { el: HTMLElement }) => {
 		log('Dragging:', el.dataset.id)
 		pl.style.position = 'absolute'
 		pl.style.zIndex = '1000'
-		pl.style.left = `${e.clientX - offset.offsetX}px`
-		pl.style.top = `${e.clientY - offset.offsetY}px`
+		pl.style.left = `${e.clientX - offsetRef.current.offsetX}px`
+		pl.style.top = `${e.clientY - offsetRef.current.offsetY}px`
 
 		const dropCell = getClosestCell(pl)
 		cells.forEach(cell => {
