@@ -38,6 +38,9 @@ importers:
       '@vitejs/plugin-react':
         specifier: ^5.1.4
         version: 5.1.4(vite@7.3.1(@types/node@25.2.3)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0))
+      '@xstate/store-react':
+        specifier: ^1.0.1
+        version: 1.0.1(react@19.2.4)
       eslint:
         specifier: ^9.39.2
         version: 9.39.2(jiti@2.6.1)
@@ -1089,6 +1092,22 @@ packages:
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
       vite: ^4.2.0 || ^5.0.0 || ^6.0.0 || ^7.0.0
+
+  '@xstate/store-react@1.0.1':
+    resolution: {integrity: sha512-J/pShjtAXYNZDLVGdx1W0OSH8kon1/pFjaQYpXEJpqsG4jAdptO0YjguqAIHK+3UvMSBf5HYlO+gMS0rRhkz8A==}
+    peerDependencies:
+      react: ^18.0.0 || ^19.0.0
+
+  '@xstate/store@3.15.0':
+    resolution: {integrity: sha512-1V4/5D55zvJz3inEbAH+pqrAy2xhb2d8OKC1fZcBwWmr51VpxTOCNgf9ma4fa/seUfpQPjRf9wxBSyfcTKtUbQ==}
+    peerDependencies:
+      react: ^18.2.0 || ^19.0.0
+      solid-js: ^1.7.6
+    peerDependenciesMeta:
+      react:
+        optional: true
+      solid-js:
+        optional: true
 
   acorn-jsx@5.3.2:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
@@ -3279,6 +3298,17 @@ snapshots:
       vite: 7.3.1(@types/node@25.2.3)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)
     transitivePeerDependencies:
       - supports-color
+
+  '@xstate/store-react@1.0.1(react@19.2.4)':
+    dependencies:
+      '@xstate/store': 3.15.0(react@19.2.4)
+      react: 19.2.4
+    transitivePeerDependencies:
+      - solid-js
+
+  '@xstate/store@3.15.0(react@19.2.4)':
+    optionalDependencies:
+      react: 19.2.4
 
   acorn-jsx@5.3.2(acorn@8.15.0):
     dependencies:

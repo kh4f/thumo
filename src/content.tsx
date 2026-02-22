@@ -1,9 +1,11 @@
 import { mountThumbnailWidget, mountPlaylistsWidget } from '@/features'
 import { log, injectCss, getPageType } from '@/utils'
 import type { PageType } from '@/types'
+import { hydrateStore } from '@/store'
 
 log('Content script is running')
 void injectCss()
+void hydrateStore()
 
 let pageType: PageType = 'unknown'
 let prevUrl = ''

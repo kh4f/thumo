@@ -3,17 +3,17 @@ import { log } from '@/utils'
 import { Grid } from './grid'
 
 export const PlaylistsWidget = ({ plsContainer }: { plsContainer: Element }) => {
-	const [pls, setPls] = useState<HTMLElement[]>([])
+	const [plEls, setPlEls] = useState<HTMLElement[]>([])
 
 	const addPlaylist = (el: HTMLElement) => {
-		log('Playlist item added:', el)
+		log('Playlist element loaded:', el)
 		const plUrl = el.querySelector('a')?.getAttribute('href')
 		if (!plUrl) return
 		const plId = new URL(plUrl, location.origin).searchParams.get('list')
 		log('ID:', plId)
 		if (!plId) return
 		el.dataset.id = plId
-		setPls(prev => {
+		setPlEls(prev => {
 			if (prev.some(e => e.dataset.id === plId)) return prev
 			return [...prev, el]
 		})
@@ -23,7 +23,7 @@ export const PlaylistsWidget = ({ plsContainer }: { plsContainer: Element }) => 
 		let observer: MutationObserver | null = null
 
 		const existingPls = plsContainer.querySelectorAll<HTMLElement>('ytd-rich-item-renderer')
-		log('Existing playlist items found:', existingPls.length)
+		log('Loaded playlist elements found:', existingPls.length)
 		existingPls.forEach(addPlaylist)
 
 		observer = new MutationObserver(muts => {
@@ -38,5 +38,5 @@ export const PlaylistsWidget = ({ plsContainer }: { plsContainer: Element }) => 
 		return () => observer.disconnect()
 	}, [plsContainer])
 
-	return <Grid pls={pls}/>
+	return <Grid plEls={plEls}/>
 }

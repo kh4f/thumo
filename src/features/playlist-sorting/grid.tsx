@@ -1,16 +1,37 @@
 import { useEffect, useRef, useState } from 'react'
+import { useSelector } from '@xstate/store-react'
+import { store } from '@/store'
+import { log } from '@/utils'
 
 let cells: HTMLElement[] = []
 
-export const Grid = ({ pls }: { pls: HTMLElement[] }) => {
+export const Grid = ({ plEls }: { plEls: HTMLElement[] }) => {
+	const cfg = useSelector(store, state => state.context)
+	const cellCount = cfg.plsGrid.cols * cfg.plsGrid.rows
+
 	useEffect(() => {
 		cells = [...document.querySelectorAll<HTMLElement>('#thumo-playlists-widget .cell')]
-	})
+	}, [plEls])
 
-	return (Array.from({ length: 18 }, (_, i) =>
-		<div className="cell" key={i}>
-			{pls[i] && <Playlist el={pls[i]}/>}
-		</div>))
+	const sortedPlIds = Array.from({ length: cellCount })
+		.reduce<(string | null)[]>((acc, _, i) => {
+			const id = cfg.plsOrder[i]
+			return acc.push(id === ''
+				? id
+				: (plEls.find(p => p.dataset.id === id)
+					?? plEls.find(p => !acc.includes(p.dataset.id!)
+						&& !cfg.plsOrder.includes(p.dataset.id))
+				)?.dataset.id ?? null), acc
+		}, [])
+
+	log('Playlists grid rendered with order:', sortedPlIds)
+
+	return sortedPlIds.map((plId, i) => {
+		const el = plEls.find(p => p.dataset.id === plId)
+		return <div className="cell" key={i} data-id={i}>
+			{el && <Playlist el={el}/>}
+		</div>
+	})
 }
 
 const getClosestCell = (pl: HTMLDivElement) => {
@@ -71,9 +92,10 @@ const Playlist = ({ el }: { el: HTMLElement }) => {
 
 		const dropCell = getClosestCell(pl)
 		if (dropCell && dropCell !== pl.parentElement) {
-			const replacePl = dropCell.firstElementChild
-			if (replacePl) pl.parentElement!.append(replacePl)
-			dropCell.append(pl)
+			store.trigger.assignPlToCell({ plId: pl.dataset.id!, cellId: Number(dropCell.dataset.id) })
+			store.trigger.assignPlToCell({ plId: '', cellId: Number(pl.parentElement!.dataset.id) })
+			const swapPl = dropCell.firstElementChild as HTMLDivElement | null
+			if (swapPl) store.trigger.assignPlToCell({ plId: swapPl.dataset.id!, cellId: Number(pl.parentElement!.dataset.id) })
 		}
 
 		pl.style.position = ''
@@ -101,11 +123,12 @@ void gcss`
 		&, * { box-sizing: border-box; }
 		width: 100%;
 		padding: 24px;
+		padding-top: calc(var(--rgap) + 10px);
 		display: grid;
-		grid-template-columns: repeat(7, minmax(150px, 200px));
-		grid-template-rows: repeat(auto-fill, minmax(100px, auto));
+		grid-template-columns: repeat(var(--cols), minmax(150px, 200px));
+		grid-template-rows: repeat(var(--rows), minmax(100px, auto));
 		justify-content: start;
-		gap: 19px 16px;
+		gap: var(--rgap) var(--cgap);
 		--inside-thumo-widget: 1;
 
 		.cell {

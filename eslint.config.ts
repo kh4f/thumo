@@ -38,6 +38,7 @@ export default defineConfig([
 			eslintReact.configs['recommended-type-checked'],
 			rawstyle.configs.recommended,
 		],
+		rules: { '@eslint-react/no-array-index-key': 'off' },
 	},
 	{
 		name: 'Stylistic Rules',
@@ -51,6 +52,7 @@ export default defineConfig([
 			'@stylistic/arrow-parens': ['error', 'as-needed'],
 			'@stylistic/eol-last': ['error', 'never'],
 			'@stylistic/max-statements-per-line': 'off',
+			'@stylistic/multiline-ternary': 'off',
 			'@stylistic/exp-list-style': 'error',
 			'@stylistic/jsx-indent-props': ['error', 'tab'],
 			'@stylistic/jsx-one-expression-per-line': 'off',
