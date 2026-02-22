@@ -53,6 +53,7 @@ const Playlist = ({ el }: { el: HTMLElement }) => {
 
 	const [offset, setOffset] = useState({ offsetX: 0, offsetY: 0 })
 	const skipPlOpenRef = useRef(false)
+	const dragStartRef = useRef<{ x: number, y: number } | null>(null)
 
 	const handlePointerDown = (e: React.PointerEvent) => {
 		e.preventDefault() // prevent link dragging on title
@@ -67,6 +68,7 @@ const Playlist = ({ el }: { el: HTMLElement }) => {
 		const offsetX = e.clientX - rect.left
 		const offsetY = e.clientY - rect.top
 		setOffset({ offsetX, offsetY })
+		dragStartRef.current = { x: e.clientX, y: e.clientY }
 		pl.dataset.dragging = ''
 		pl.parentElement!.dataset.dragSource = ''
 		pl.style.width = `${pl.offsetWidth}px`
@@ -76,6 +78,13 @@ const Playlist = ({ el }: { el: HTMLElement }) => {
 	const handlePointerMove = (e: React.PointerEvent) => {
 		const pl = e.currentTarget as HTMLDivElement
 		if (!('dragging' in pl.dataset)) return
+
+		// prevent accidental drag on click
+		if (dragStartRef.current) {
+			const cursorDist = Math.hypot(e.clientX - dragStartRef.current.x, e.clientY - dragStartRef.current.y)
+			if (cursorDist < 3) return
+			dragStartRef.current = null
+		}
 
 		log('Dragging:', el.dataset.id)
 		pl.style.position = 'absolute'
