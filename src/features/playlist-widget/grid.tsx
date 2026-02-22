@@ -5,9 +5,9 @@ import { log } from '@/utils'
 
 let cells: HTMLElement[] = []
 
-export const Grid = ({ plEls }: { plEls: HTMLElement[] }) => {
+export const PlaylistGrid = ({ plEls }: { plEls: HTMLElement[] }) => {
 	const cfg = useSelector(store, state => state.context)
-	const cellCount = cfg.plsGrid.cols * cfg.plsGrid.rows
+	const cellCount = cfg.plGrid.cols * cfg.plGrid.rows
 
 	useEffect(() => {
 		cells = [...document.querySelectorAll<HTMLElement>('#thumo-playlists-widget .cell')]
@@ -15,16 +15,16 @@ export const Grid = ({ plEls }: { plEls: HTMLElement[] }) => {
 
 	const sortedPlIds = Array.from({ length: cellCount })
 		.reduce<(string | null)[]>((acc, _, i) => {
-			const id = cfg.plsOrder[i]
+			const id = cfg.plOrder[i]
 			return acc.push(id === ''
 				? id
 				: (plEls.find(p => p.dataset.id === id)
 					?? plEls.find(p => !acc.includes(p.dataset.id!)
-						&& !cfg.plsOrder.includes(p.dataset.id))
+						&& !cfg.plOrder.includes(p.dataset.id))
 				)?.dataset.id ?? null), acc
 		}, [])
 
-	log('Playlists grid rendered with order:', sortedPlIds)
+	log('Playlist grid rendered with order:', sortedPlIds)
 
 	return sortedPlIds.map((plId, i) => {
 		const el = plEls.find(p => p.dataset.id === plId)

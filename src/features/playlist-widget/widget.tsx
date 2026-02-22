@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { log } from '@/utils'
-import { Grid } from './grid'
+import { PlaylistGrid } from './grid'
 
-export const PlaylistsWidget = ({ plsContainer }: { plsContainer: Element }) => {
+export const PlaylistWidget = ({ plOrigContainer }: { plOrigContainer: Element }) => {
 	const [plEls, setPlEls] = useState<HTMLElement[]>([])
 
 	const addPlaylist = (el: HTMLElement) => {
@@ -22,9 +22,9 @@ export const PlaylistsWidget = ({ plsContainer }: { plsContainer: Element }) => 
 	useEffect(() => {
 		let observer: MutationObserver | null = null
 
-		const existingPls = plsContainer.querySelectorAll<HTMLElement>('ytd-rich-item-renderer')
-		log('Loaded playlist elements found:', existingPls.length)
-		existingPls.forEach(addPlaylist)
+		const loadedPls = plOrigContainer.querySelectorAll<HTMLElement>('ytd-rich-item-renderer')
+		log('Loaded playlist elements found:', loadedPls.length)
+		loadedPls.forEach(addPlaylist)
 
 		observer = new MutationObserver(muts => {
 			for (const mut of muts)
@@ -33,10 +33,10 @@ export const PlaylistsWidget = ({ plsContainer }: { plsContainer: Element }) => 
 					if (node.matches('ytd-rich-item-renderer')) addPlaylist(node)
 				}
 		})
-		observer.observe(plsContainer, { childList: true, subtree: true })
+		observer.observe(plOrigContainer, { childList: true, subtree: true })
 
 		return () => observer.disconnect()
-	}, [plsContainer])
+	}, [plOrigContainer])
 
-	return <Grid plEls={plEls}/>
+	return <PlaylistGrid plEls={plEls}/>
 }

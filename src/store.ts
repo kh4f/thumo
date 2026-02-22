@@ -2,22 +2,22 @@ import { createStore } from '@xstate/store-react'
 import { log } from '@/utils'
 
 interface Config {
-	plsOrder: (string | null | undefined)[]
-	plsGrid: { cols: number, rows: number, cgap: number, rgap: number }
+	plOrder: (string | null | undefined)[]
+	plGrid: { cols: number, rows: number, cgap: number, rgap: number }
 }
 
 export const store = createStore({
 	context: {
-		plsOrder: [],
-		plsGrid: { cols: 7, rows: 3, cgap: 12, rgap: 12 },
+		plOrder: [],
+		plGrid: { cols: 7, rows: 3, cgap: 12, rgap: 12 },
 	} as Config,
 	on: {
 		set: (ctx, e: { config: Config }) => ({ ...ctx, ...e.config }),
 		assignPlToCell: (ctx, e: { plId: string | null, cellId: number }) => {
 			log(`Assigning playlist '${e.plId}' to cell '${e.cellId}'`)
-			ctx.plsOrder[e.cellId] = e.plId
-			const lastValidIdx = ctx.plsOrder.findLastIndex(v => v != null)
-			return { ...ctx, plsOrder: ctx.plsOrder.slice(0, lastValidIdx + 1) }
+			ctx.plOrder[e.cellId] = e.plId
+			const lastValidIdx = ctx.plOrder.findLastIndex(v => v != null)
+			return { ...ctx, plOrder: ctx.plOrder.slice(0, lastValidIdx + 1) }
 		},
 	},
 })
