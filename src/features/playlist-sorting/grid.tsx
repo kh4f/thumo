@@ -176,7 +176,7 @@ void gcss`
 							z-index: 2;
 							right: 0;
 							margin-right: -3px;
-							margin-top: -98px;
+							margin-top: -60%;
 
 							&:not(ytd-rich-item-renderer:has(.yt-spec-touch-feedback-shape--hovered)
 							.yt-lockup-metadata-view-model__metadata) {
