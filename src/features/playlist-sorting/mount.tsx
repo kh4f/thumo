@@ -10,7 +10,7 @@ export const mountPlaylistsWidget = async () => {
 	let widgetEl = document.getElementById('thumo-playlists-widget')
 	if (widgetEl) log('Playlists widget already exists:', widgetEl)
 	else {
-		widgetEl = Object.assign(document.createElement('div'), { id: 'thumo-playlists-widget', class: 'style-scope ytd-rich-grid-renderer' })
+		widgetEl = Object.assign(document.createElement('div'), { id: 'thumo-playlists-widget' })
 		plsContainer.before(widgetEl)
 		createRoot(widgetEl).render(<PlaylistsWidget plsContainer={plsContainer}/>)
 		log('Playlists widget mounted:', widgetEl)
