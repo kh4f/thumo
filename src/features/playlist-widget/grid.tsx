@@ -105,9 +105,7 @@ const Playlist = ({ el }: { el: HTMLElement }) => {
 			if (swapPl) store.trigger.assignPlToCell({ plId: swapPl.dataset.id!, cellId: Number(pl.parentElement!.dataset.id) })
 		}
 
-		pl.style.position = ''
-		pl.style.width = ''
-		pl.style.zIndex = ''
+		pl.style.cssText = ''
 		delete pl.dataset.dragging
 		cells.forEach(cell => {
 			delete cell.dataset.dragSource
