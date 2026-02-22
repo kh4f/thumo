@@ -66,7 +66,7 @@ const Playlist = ({ el }: { el: HTMLElement }) => {
 	const handlePointerUp = (e: React.PointerEvent) => {
 		const pl = e.currentTarget as HTMLDivElement
 		// if the playlist was clicked without dragging, open it
-		if (!pl.style.position) open(pl.querySelector('a')!.href, e.button === 1 ? '_blank' : undefined)
+		if (!pl.style.position) open(pl.querySelector('a')!.href, e.button === 1 ? '_blank' : '_self')
 		if (!('dragging' in pl.dataset)) return
 
 		const dropCell = getClosestCell(pl)
