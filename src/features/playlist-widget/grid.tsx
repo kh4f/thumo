@@ -61,6 +61,7 @@ const Playlist = ({ el }: { el: HTMLElement }) => {
 			return
 		}
 
+		log('Drag started:', el.dataset.id)
 		const pl = e.currentTarget as HTMLDivElement
 		const rect = pl.getBoundingClientRect()
 		const offsetX = e.clientX - rect.left
@@ -76,6 +77,7 @@ const Playlist = ({ el }: { el: HTMLElement }) => {
 		const pl = e.currentTarget as HTMLDivElement
 		if (!('dragging' in pl.dataset)) return
 
+		log('Dragging:', el.dataset.id)
 		pl.style.position = 'absolute'
 		pl.style.zIndex = '1000'
 		pl.style.left = `${e.clientX - offset.offsetX}px`
@@ -96,6 +98,7 @@ const Playlist = ({ el }: { el: HTMLElement }) => {
 			return
 		}
 
+		log('Dropped:', el.dataset.id)
 		const dropCell = getClosestCell(pl)
 		if (dropCell && dropCell !== pl.parentElement) {
 			store.trigger.assignPlToCell({ plId: pl.dataset.id!, cellId: Number(dropCell.dataset.id) })
