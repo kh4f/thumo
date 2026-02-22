@@ -141,66 +141,60 @@ void gcss`
 				background-color: hsl(0, 0%, 100%, 0.03);
 			}
 
-			.playlist {
-				&, * { user-select: none; }
-			}
-		}
-	}
+			* { user-select: none; }
 
-	body[data-page-type="playlists"] #contents.ytd-rich-grid-renderer {
-		box-sizing: border-box;
-		padding-left: 24px;
-		gap: 19px 16px;
-		display: none;
-	}
+			.playlist ytd-rich-item-renderer {
+				display: block;
+				width: if(style(--inside-thumo-widget: 1): 100%; else: 200px);
+				margin: 6px 0 0 0;
+				border-radius: 12px;
+				background-color: hsl(0, 0%, 8%);
 
-	:is(body[data-page-type="playlists"] #contents.ytd-rich-grid-renderer, #thumo-playlists-widget) ytd-rich-item-renderer {
-		display: block;
-		width: if(style(--inside-thumo-widget: 1): 100%; else: 200px);
-		margin: 6px 0 0 0;
-		border-radius: 12px;
-		background-color: hsl(0, 0%, 8%);
+				> #content > yt-lockup-view-model > div > a {
+					padding-bottom: 0px;
 
-		> #content > yt-lockup-view-model > div > a {
-			padding-bottom: 0px;
-
-			.ytThumbnailViewModelAspectRatio16By9 {
-				padding-top: 48%;
-			}
-
-			+ div {
-				padding: 6px 12px;
-
-				h3 span {
-					font-size: 14px;
-					white-space: nowrap;
-				}
-
-				.yt-lockup-metadata-view-model__metadata {
-					position: absolute;
-					z-index: 2;
-					right: 0;
-					margin-right: -3px;
-					margin-top: -98px;
-
-					&:not(ytd-rich-item-renderer:has(.yt-spec-touch-feedback-shape--hovered)
-					.yt-lockup-metadata-view-model__metadata) {
-						display: none;
+					.ytThumbnailViewModelAspectRatio16By9 {
+						padding-top: 48%;
 					}
 
-					.yt-content-metadata-view-model__metadata-row {
-						justify-content: end;
+					+ div {
+						padding: 6px 12px;
 
-						span {
-							font-size: 9px;
-							line-height: 1;
-							color: hsl(0, 0%, 80%);
+						h3 span {
+							font-size: 14px;
+							white-space: nowrap;
+						}
+
+						.yt-lockup-metadata-view-model__metadata {
+							position: absolute;
+							z-index: 2;
+							right: 0;
+							margin-right: -3px;
+							margin-top: -98px;
+
+							&:not(ytd-rich-item-renderer:has(.yt-spec-touch-feedback-shape--hovered)
+							.yt-lockup-metadata-view-model__metadata) {
+								display: none;
+							}
+
+							.yt-content-metadata-view-model__metadata-row {
+								justify-content: end;
+
+								span {
+									font-size: 9px;
+									line-height: 1;
+									color: hsl(0, 0%, 80%);
+								}
+							}
 						}
 					}
 				}
 			}
 		}
 	}
+
+	/* hide original playlist grid */
+	body[data-page-type="playlists"] ytd-browse[role="main"] #contents { display: none; }
 
 	/* prevent preview from intercepting drag events */
 	ytd-video-preview { pointer-events: none !important; }
