@@ -4,7 +4,7 @@ import { PlaylistsWidget } from './widget'
 import { store } from '@/store'
 
 export const mountPlaylistsWidget = async () => {
-	const plsContainer = await waitForEl('ytd-browse[role="main"] #contents.ytd-rich-grid-renderer')
+	const plsContainer = await waitForEl('ytd-browse[role="main"] #contents')
 	log('Playlists container found:', plsContainer)
 
 	let widgetEl = document.getElementById('thumo-playlists-widget')
