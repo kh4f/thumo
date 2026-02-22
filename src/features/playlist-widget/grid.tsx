@@ -92,11 +92,9 @@ const Playlist = ({ el }: { el: HTMLElement }) => {
 
 	const handlePointerUp = (e: React.PointerEvent) => {
 		const pl = e.currentTarget as HTMLDivElement
-		if (!('dragging' in pl.dataset)) {
-			if (skipPlOpenRef.current) skipPlOpenRef.current = false
-			else open(pl.querySelector('a')!.href, e.button === 1 ? '_blank' : '_self')
-			return
-		}
+		if (skipPlOpenRef.current) return (skipPlOpenRef.current = false)
+		if (!pl.style.position) return open(pl.querySelector('a')!.href, e.button === 1 ? '_blank' : '_self')
+		if (!('dragging' in pl.dataset)) return
 
 		log('Dropped:', el.dataset.id)
 		const dropCell = getClosestCell(pl)
