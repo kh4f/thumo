@@ -9,6 +9,7 @@
 	"homepage": "https://github.com/kh4f/thumo#readme",
 	"keywords": ["thumo", "thumo-extension", "chrome-extension", "youtube-thumbnails", "youtube-extension", "youtube"],
 	"pnpm": { "onlyBuiltDependencies": ["esbuild"] },
+	"relion": { "bumpFiles": ["package.json", "src/manifest.json"] },
 	"type": "module",
 	"scripts": {
 		"build": "tsdown",
