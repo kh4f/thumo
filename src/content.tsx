@@ -1,4 +1,4 @@
-import { mountThumbnailWidget, mountPlaylistWidget } from '@/features'
+import { mountThumbnailWidget, mountPlaylistGrid } from '@/features'
 import { log, injectCss, getPageType } from '@/utils'
 import type { PageType } from '@/types'
 import { hydrateStore } from '@/store'
@@ -37,7 +37,7 @@ const onTabLoad = async (tabInfo: chrome.tabs.Tab) => {
 			break
 		}
 		case 'playlists': {
-			await mountPlaylistWidget()
+			await mountPlaylistGrid()
 			break
 		}
 	}

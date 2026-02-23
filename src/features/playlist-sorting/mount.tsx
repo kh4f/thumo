@@ -3,7 +3,7 @@ import { log, waitForEl } from '@/utils'
 import { PlaylistGrid } from './grid'
 import { store } from '@/store'
 
-export const mountPlaylistWidget = async () => {
+export const mountPlaylistGrid = async () => {
 	const origPlContainer = await waitForEl('ytd-browse[role="main"] #contents')
 	log('Original playlist container found:', origPlContainer)
 
