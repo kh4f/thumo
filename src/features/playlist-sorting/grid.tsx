@@ -11,7 +11,7 @@ export const PlaylistGrid = ({ origPlContainer }: { origPlContainer: HTMLElement
 	const [plEls, setPlEls] = useState<HTMLElement[]>([])
 
 	useEffect(() => {
-		const updatePlaylistEls = (el: HTMLElement) => {
+		const updatePlEls = (el: HTMLElement) => {
 			const plUrl = el.querySelector('a')?.getAttribute('href')
 			if (!plUrl) return
 			const plId = new URL(plUrl, location.origin).searchParams.get('list')
@@ -22,14 +22,14 @@ export const PlaylistGrid = ({ origPlContainer }: { origPlContainer: HTMLElement
 
 		const loadedPls = origPlContainer.querySelectorAll<HTMLElement>('ytd-rich-item-renderer')
 		log('Loaded playlist elements found:', loadedPls.length)
-		loadedPls.forEach(updatePlaylistEls)
+		loadedPls.forEach(updatePlEls)
 
 		const observer = new MutationObserver(muts => {
 			for (const mut of muts)
 				for (const node of mut.addedNodes) {
 					if (node instanceof HTMLElement && node.matches('ytd-rich-item-renderer')) {
 						log('Playlist element updated:', node)
-						updatePlaylistEls(node)
+						updatePlEls(node)
 					}
 				}
 		})
