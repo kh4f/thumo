@@ -89,7 +89,7 @@ const Playlist = ({ el }: { el: HTMLElement }) => {
 
 		log('Dragging:', el.dataset.id)
 		pl.style.position = 'absolute'
-		pl.style.zIndex = '1000'
+		pl.style.zIndex = '1'
 		pl.style.left = `${e.clientX - offsetRef.current.offsetX}px`
 		pl.style.top = `${e.clientY - offsetRef.current.offsetY}px`
 
