@@ -9,12 +9,12 @@ export const PlaylistWidget = ({ plOrigContainer }: { plOrigContainer: Element }
 		const plUrl = el.querySelector('a')?.getAttribute('href')
 		if (!plUrl) return
 		const plId = new URL(plUrl, location.origin).searchParams.get('list')
-		log('ID:', plId)
 		if (!plId) return
 		el.dataset.id = plId
 		setPlEls(prev => {
 			if (prev.some(e => e.dataset.id === plId)) return prev
 			log('Playlist element loaded:', el)
+			log('ID:', plId)
 			return [...prev, el]
 		})
 	}
