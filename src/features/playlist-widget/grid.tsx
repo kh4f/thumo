@@ -117,6 +117,7 @@ const Playlist = ({ el }: { el: HTMLElement }) => {
 
 		pl.style.cssText = ''
 		delete pl.dataset.dragging
+		pl.releasePointerCapture(e.pointerId)
 		cells.forEach(cell => {
 			delete cell.dataset.dragSource
 			delete cell.dataset.dropTarget
