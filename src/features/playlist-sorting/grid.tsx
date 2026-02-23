@@ -10,16 +10,16 @@ export const PlaylistGrid = ({ origPlContainer }: { origPlContainer: HTMLElement
 	const cellCount = cfg.plGrid.cols * cfg.plGrid.rows
 	const [plEls, setPlEls] = useState<HTMLElement[]>([])
 
-	const updatePlaylistEls = (el: HTMLElement) => {
-		const plUrl = el.querySelector('a')?.getAttribute('href')
-		if (!plUrl) return
-		const plId = new URL(plUrl, location.origin).searchParams.get('list')
-		if (!plId) return
-		el.dataset.id = plId
-		setPlEls(val => [...val.filter(e => e.dataset.id !== plId), el])
-	}
-
 	useEffect(() => {
+		const updatePlaylistEls = (el: HTMLElement) => {
+			const plUrl = el.querySelector('a')?.getAttribute('href')
+			if (!plUrl) return
+			const plId = new URL(plUrl, location.origin).searchParams.get('list')
+			if (!plId) return
+			el.dataset.id = plId
+			setPlEls(prev => [...prev.filter(e => e.dataset.id !== plId), el])
+		}
+
 		const loadedPls = origPlContainer.querySelectorAll<HTMLElement>('ytd-rich-item-renderer')
 		log('Loaded playlist elements found:', loadedPls.length)
 		loadedPls.forEach(updatePlaylistEls)
