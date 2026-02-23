@@ -57,6 +57,7 @@ const Playlist = ({ el }: { el: HTMLElement }) => {
 
 	const handlePointerDown = (e: React.PointerEvent) => {
 		e.preventDefault() // prevent link dragging on title
+		if (e.button !== 0) return // only allow left mouse button for dragging
 		if (['.yt-lockup-metadata-view-model__menu-button', '.yt-lockup-metadata-view-model__metadata'].some(selector => (e.target as HTMLElement).closest(selector))) {
 			skipPlOpenRef.current = true
 			return
@@ -102,8 +103,8 @@ const Playlist = ({ el }: { el: HTMLElement }) => {
 	const handlePointerUp = (e: React.PointerEvent) => {
 		const pl = e.currentTarget as HTMLDivElement
 		if (skipPlOpenRef.current) return (skipPlOpenRef.current = false)
-		if (!pl.style.position) return open(pl.querySelector('a')!.href, e.button === 1 ? '_blank' : '_self')
 		if (!('dragging' in pl.dataset)) return
+		if (!pl.style.position) return open(pl.querySelector('a')!.href, e.button === 1 ? '_blank' : '_self')
 
 		log('Dropped:', el.dataset.id)
 		const dropCell = getClosestCell(pl)
