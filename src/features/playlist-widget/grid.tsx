@@ -139,12 +139,12 @@ void gcss`
 		&, * { box-sizing: border-box; }
 		width: 100%;
 		padding: 24px;
-		padding-top: calc(var(--rgap) + 10px);
+		padding-top: calc(var(--gap) + 10px);
 		display: grid;
 		grid-template-columns: repeat(var(--cols), minmax(0, 200px));
 		grid-template-rows: repeat(var(--rows), minmax(0, auto));
 		justify-content: start;
-		gap: var(--rgap) var(--cgap);
+		gap: var(--gap);
 		--inside-thumo-widget: 1;
 
 		.cell {

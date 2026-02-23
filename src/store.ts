@@ -3,14 +3,11 @@ import { log } from '@/utils'
 
 interface Config {
 	plOrder: (string | null | undefined)[]
-	plGrid: { cols: number, rows: number, cgap: number, rgap: number }
+	plGrid: { cols: number, rows: number, gap: number }
 }
 
 export const store = createStore({
-	context: {
-		plOrder: [],
-		plGrid: { cols: 7, rows: 3, cgap: 12, rgap: 12 },
-	} as Config,
+	context: { plOrder: [], plGrid: { cols: 7, rows: 3, gap: 12 } } as Config,
 	on: {
 		set: (ctx, e: { config: Config }) => ({ ...ctx, ...e.config }),
 		assignPlToCell: (ctx, e: { plId: string | null, cellId: number }) => {
