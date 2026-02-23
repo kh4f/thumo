@@ -1,17 +1,42 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useSelector } from '@xstate/store-react'
 import { store } from '@/store'
 import { log } from '@/utils'
 
 let cells: HTMLElement[] = []
 
-export const PlaylistGrid = ({ plEls }: { plEls: HTMLElement[] }) => {
+export const PlaylistGrid = ({ origPlContainer }: { origPlContainer: HTMLElement }) => {
 	const cfg = useSelector(store, state => state.context)
 	const cellCount = cfg.plGrid.cols * cfg.plGrid.rows
+	const [plEls, setPlEls] = useState<HTMLElement[]>([])
+
+	const updatePlaylistEls = (el: HTMLElement) => {
+		const plUrl = el.querySelector('a')?.getAttribute('href')
+		if (!plUrl) return
+		const plId = new URL(plUrl, location.origin).searchParams.get('list')
+		if (!plId) return
+		el.dataset.id = plId
+		setPlEls(val => [...val.filter(e => e.dataset.id !== plId), el])
+	}
 
 	useEffect(() => {
-		cells = [...document.querySelectorAll<HTMLElement>('#thumo-playlists-widget .cell')]
-	}, [plEls])
+		const loadedPls = origPlContainer.querySelectorAll<HTMLElement>('ytd-rich-item-renderer')
+		log('Loaded playlist elements found:', loadedPls.length)
+		loadedPls.forEach(updatePlaylistEls)
+
+		const observer = new MutationObserver(muts => {
+			for (const mut of muts)
+				for (const node of mut.addedNodes) {
+					if (node instanceof HTMLElement && node.matches('ytd-rich-item-renderer')) {
+						log('Playlist element updated:', node)
+						updatePlaylistEls(node)
+					}
+				}
+		})
+		observer.observe(origPlContainer, { childList: true, subtree: true })
+
+		return () => observer.disconnect()
+	}, [origPlContainer])
 
 	const sortedPlIds = Array.from({ length: cellCount })
 		.reduce<(string | null)[]>((acc, _, i) => {
@@ -49,7 +74,7 @@ const getClosestCell = (pl: HTMLDivElement) => {
 
 const Playlist = ({ el }: { el: HTMLElement }) => {
 	const ref = useRef<HTMLDivElement>(null)
-	useEffect(() => ref.current?.append(el), [el])
+	useEffect(() => ref.current?.replaceChildren(el), [el])
 
 	const offsetRef = useRef({ offsetX: 0, offsetY: 0 })
 	const skipPlOpenRef = useRef(false)
@@ -74,6 +99,7 @@ const Playlist = ({ el }: { el: HTMLElement }) => {
 		pl.parentElement!.dataset.dragSource = ''
 		pl.style.width = `${pl.offsetWidth}px`
 		pl.setPointerCapture(e.pointerId)
+		cells = [...document.querySelectorAll<HTMLElement>('#thumo-playlist-widget .cell')]
 	}
 
 	const handlePointerMove = (e: React.PointerEvent) => {
@@ -135,7 +161,7 @@ const Playlist = ({ el }: { el: HTMLElement }) => {
 }
 
 void gcss`
-	#thumo-playlists-widget {
+	#thumo-playlist-widget {
 		&, * { box-sizing: border-box; }
 		width: 100%;
 		padding: 24px;
