@@ -30,16 +30,14 @@ const onTabLoad = async (tabInfo: chrome.tabs.Tab) => {
 	document.body.dataset.pageType = pageType
 
 	switch (pageType) {
-		case 'watch': {
+		case 'watch':
 			const videoId = /watch\?v=([^&]+)/.exec(url)![1]
 			log('Video ID:', videoId)
 			await mountThumbnailWidget(videoId)
 			break
-		}
-		case 'playlists': {
+		case 'playlists':
 			await mountPlaylistGrid()
 			break
-		}
 	}
 }
 

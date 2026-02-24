@@ -14,6 +14,7 @@ export default defineConfig([
 		name: 'Base Rules',
 		files: ['**/*.ts?(x)'],
 		extends: [eslint.configs.recommended],
+		rules: { 'no-case-declarations': 'off' },
 	},
 	{
 		name: 'Type-Aware Rules',
