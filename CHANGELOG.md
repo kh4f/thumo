@@ -1,6 +1,29 @@
 # Changelog
 
 
+## &ensp; [` 📦 v0.3.0  `](https://github.com/kh4f/thumo/compare/v0.2.0...v0.3.0)
+
+### &emsp; 🧨 BREAKING CHANGES
+- **Grid gap configuration**: the `plGrid` interface now uses a single `gap` property instead of separate `rgap` and `cgap` options. [🡥](https://github.com/kh4f/thumo/commit/01c755e)
+
+### &emsp; 🎁 Features
+- **Playlist grid auto-refresh**: the grid now automatically refreshes when playlists are renamed or edited, eliminating the need to manually reload the page. [🡥](https://github.com/kh4f/thumo/commit/73e0ce9)
+
+### &emsp; 🩹 Fixes
+- **Reliable playlist synchronization**:
+    - Playlists no longer shift positions when new items are added. [🡥](https://github.com/kh4f/thumo/commit/691d09d)
+    - Grid stays synchronized with YouTube's playlist container on mutations. [🡥](https://github.com/kh4f/thumo/commit/c6f3cd3)
+    - Sparse array assignments no longer fill with undefined values. [🡥](https://github.com/kh4f/thumo/commit/0e32f41)
+    - Empty strings are now properly trimmed from playlist order. [🡥](https://github.com/kh4f/thumo/commit/495e4b3)
+- **Enhanced drag & drop**:
+    - Accidental drags on simple clicks are now prevented with cursor movement threshold. [🡥](https://github.com/kh4f/thumo/commit/f0669a5)
+    - Only left mouse button can trigger dragging; middle and right buttons work normally. [🡥](https://github.com/kh4f/thumo/commit/1f9c2aa)
+    - Pointer capture is properly released after drag operations complete. [🡥](https://github.com/kh4f/thumo/commit/ba47310)
+- **Thumbnail widget updates**: widget now re-renders with correct thumbnail when navigating between videos. [🡥](https://github.com/kh4f/thumo/commit/9a58c88)
+
+##### &emsp;&emsp; [Full Changelog](https://github.com/kh4f/thumo/compare/v0.2.0...v0.3.0) &ensp;•&ensp; Feb 25, 2026
+
+
 ## &ensp; [` 📦 v0.2.0  `](https://github.com/kh4f/thumo/compare/v0.1.0...v0.2.0)
 
 ### &emsp; 🎁 Features
