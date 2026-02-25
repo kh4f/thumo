@@ -11,5 +11,8 @@ export default {
 	minify: isProd,
 	sourcemap: isProd ? false : 'inline',
 	inlineOnly: false,
-	plugins: [react(), rawstyle()],
+	plugins: [
+		react({ babel: { plugins: ['babel-plugin-react-compiler'] } }),
+		rawstyle(),
+	],
 } satisfies UserConfig
