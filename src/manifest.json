@@ -5,7 +5,8 @@
 	"description": "🎴 Elegant YouTube UI Enhancer",
 	"icons": { "128": "assets/icon-128.png" },
 	"action": { "default_icon": "assets/icon-128.png" },
-	"permissions": ["tabs", "scripting", "storage"],
+	"permissions": ["tabs", "scripting", "storage", "webRequest"],
+	"host_permissions": ["https://www.youtube.com/*"],
 	"background": { "service_worker": "background.js" },
 	"content_scripts": [{ "matches": ["https://www.youtube.com/*"], "js": ["content.js"] }],
 	"web_accessible_resources": [{ "matches": ["https://www.youtube.com/*"], "resources": ["content.css"] }]
