@@ -165,7 +165,7 @@ void gcss`
 		padding: 24px;
 		padding-top: calc(var(--gap) + 10px);
 		display: grid;
-		grid-template-columns: repeat(var(--cols), minmax(0, 200px));
+		grid-template-columns: repeat(var(--cols), minmax(0, 150px));
 		grid-template-rows: repeat(var(--rows), minmax(0, auto));
 		justify-content: start;
 		gap: var(--gap);
