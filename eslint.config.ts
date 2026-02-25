@@ -39,7 +39,10 @@ export default defineConfig([
 			eslintReact.configs['recommended-type-checked'],
 			rawstyle.configs.recommended,
 		],
-		rules: { '@eslint-react/no-array-index-key': 'off' },
+		rules: {
+			'@eslint-react/no-array-index-key': 'off',
+			'@eslint-react/hooks-extra/no-direct-set-state-in-use-effect': 'off',
+		},
 	},
 	{
 		name: 'Stylistic Rules',

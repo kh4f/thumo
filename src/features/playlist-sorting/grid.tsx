@@ -11,47 +11,44 @@ export const PlaylistGrid = ({ origPlContainer }: { origPlContainer: HTMLElement
 	const [plEls, setPlEls] = useState<HTMLElement[]>([])
 
 	useEffect(() => {
-		const updatePlEls = (el: HTMLElement) => {
-			const plUrl = el.querySelector('a')?.getAttribute('href')
-			if (!plUrl) return
-			const plId = new URL(plUrl, location.origin).searchParams.get('list')
-			if (!plId) return
-			el.dataset.id = plId
-			setPlEls(prev => [...prev.filter(e => e.dataset.id !== plId), el])
+		const syncPlEls = () => {
+			const pls = [...origPlContainer.querySelectorAll<HTMLElement>('ytd-rich-item-renderer')]
+			log('Syncing playlists with grid:', pls.length)
+			pls.forEach(assignPlId)
+			setPlEls(pls)
 		}
 
-		const loadedPls = origPlContainer.querySelectorAll<HTMLElement>('ytd-rich-item-renderer')
-		log('Loaded playlist elements found:', loadedPls.length)
-		loadedPls.forEach(updatePlEls)
+		const assignPlId = (el: HTMLElement) => {
+			const plUrl = el.querySelector('a')!.getAttribute('href')!
+			const plId = new URL(plUrl, location.origin).searchParams.get('list')
+			if (!plId) return log('Failed to extract playlist ID from element:', el)
+			el.dataset.id = plId
+		}
+
+		syncPlEls()
 
 		const observer = new MutationObserver(muts => {
+			let needsSync = false
 			for (const mut of muts)
-				for (const node of mut.addedNodes) {
-					if (node instanceof HTMLElement && node.matches('ytd-rich-item-renderer')) {
-						log('Playlist element updated:', node)
-						updatePlEls(node)
-					}
-				}
+				for (const node of mut.addedNodes)
+					if (node instanceof HTMLElement && node.matches('ytd-rich-item-renderer')) needsSync = true
+
+			if (needsSync) syncPlEls()
 		})
 		observer.observe(origPlContainer, { childList: true, subtree: true })
 
 		return () => observer.disconnect()
 	}, [origPlContainer])
 
-	const sortedPlIds = Array.from({ length: cellCount })
-		.reduce<(string | null)[]>((acc, _, i) => {
-			const id = cfg.plOrder[i]
-			return acc.push(id === ''
-				? id
-				: (plEls.find(p => p.dataset.id === id)
-					?? plEls.find(p => !acc.includes(p.dataset.id!)
-						&& !cfg.plOrder.includes(p.dataset.id))
-				)?.dataset.id ?? null), acc
-		}, [])
+	const plOrder = Array.from({ length: cellCount }).reduce<string[]>((acc, _, i) => (
+		acc.push((cfg.plOrder[i]
+			? plEls.find(el => el.dataset.id === cfg.plOrder[i])
+			: plEls.find(el => !acc.includes(el.dataset.id!) && !cfg.plOrder.includes(el.dataset.id!)))?.dataset.id ?? ''), acc
+	), [])
 
-	log('Playlist grid rendered with order:', sortedPlIds)
+	log('Playlist grid rendered with order:', plOrder)
 
-	return sortedPlIds.map((plId, i) => {
+	return plOrder.map((plId, i) => {
 		const el = plEls.find(p => p.dataset.id === plId)
 		return <div className="cell" key={i} data-id={i}>
 			{el && <Playlist el={el}/>}
