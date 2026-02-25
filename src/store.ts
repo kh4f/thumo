@@ -12,6 +12,7 @@ export const store = createStore({
 		set: (ctx, e: { config: Config }) => ({ ...ctx, ...e.config }),
 		assignPlToCell: (ctx, e: { plId: string, cellId: number }) => {
 			log(`Assigning playlist '${e.plId}' to cell '${e.cellId}'`)
+			while (e.cellId > ctx.plOrder.length) ctx.plOrder.push('')
 			ctx.plOrder[e.cellId] = e.plId
 			const lastValidIdx = ctx.plOrder.findLastIndex(Boolean)
 			return { ...ctx, plOrder: ctx.plOrder.slice(0, lastValidIdx + 1) }
