@@ -169,7 +169,7 @@ void gcss`
 		grid-template-rows: repeat(var(--rows), minmax(0, auto));
 		justify-content: start;
 		gap: var(--gap);
-		--inside-thumo-widget: 1;
+		--inside-thumo-grid: 1;
 
 		.cell {
 			border: 2px dashed hsl(0, 0%, 100%, 0.05);
@@ -185,7 +185,7 @@ void gcss`
 
 			.playlist ytd-rich-item-renderer {
 				display: block;
-				width: if(style(--inside-thumo-widget: 1): 100%; else: 200px);
+				width: if(style(--inside-thumo-grid: 1): 100%; else: 200px);
 				margin: 6px 0 0 0;
 				border-radius: 12px;
 				background-color: hsl(0, 0%, 8%);
