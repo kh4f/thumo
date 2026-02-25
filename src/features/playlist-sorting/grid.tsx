@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useSelector } from '@xstate/store-react'
-import { store } from '@/store'
+import { store, type Config } from '@/store'
 import { log } from '@/utils'
 
 let cells: HTMLElement[] = []
@@ -51,7 +51,7 @@ export const PlaylistGrid = ({ origPlContainer }: { origPlContainer: HTMLElement
 	return plOrder.map((plId, i) => {
 		const el = plEls.find(p => p.dataset.id === plId)
 		return <div className="cell" key={i} data-id={i}>
-			{el && <Playlist el={el}/>}
+			{el && <Playlist el={el} plOrder={plOrder}/>}
 		</div>
 	})
 }
@@ -69,7 +69,7 @@ const getClosestCell = (pl: HTMLDivElement) => {
 	}, { cell: null as HTMLElement | null, dist: Infinity }).cell
 }
 
-const Playlist = ({ el }: { el: HTMLElement }) => {
+const Playlist = ({ el, plOrder }: { el: HTMLElement, plOrder: Config['plOrder'] }) => {
 	const ref = useRef<HTMLDivElement>(null)
 	useEffect(() => ref.current?.replaceChildren(el), [el])
 
@@ -132,6 +132,7 @@ const Playlist = ({ el }: { el: HTMLElement }) => {
 		log('Dropped:', el.dataset.id)
 		const dropCell = getClosestCell(pl)
 		if (dropCell && dropCell !== pl.parentElement) {
+			store.trigger.setPlOrder({ plOrder })
 			store.trigger.assignPlToCell({ plId: pl.dataset.id!, cellId: Number(dropCell.dataset.id) })
 			store.trigger.assignPlToCell({ plId: '', cellId: Number(pl.parentElement!.dataset.id) })
 			const swapPl = dropCell.firstElementChild as HTMLDivElement | null
