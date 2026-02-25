@@ -96,7 +96,7 @@ const Playlist = ({ el, plOrder }: { el: HTMLElement, plOrder: Config['plOrder']
 		pl.parentElement!.dataset.dragSource = ''
 		pl.style.width = `${pl.offsetWidth}px`
 		pl.setPointerCapture(e.pointerId)
-		cells = [...document.querySelectorAll<HTMLElement>('#thumo-playlist-widget .cell')]
+		cells = [...document.querySelectorAll<HTMLElement>('#thumo-playlist-grid .cell')]
 	}
 
 	const handlePointerMove = (e: React.PointerEvent) => {
@@ -159,7 +159,7 @@ const Playlist = ({ el, plOrder }: { el: HTMLElement, plOrder: Config['plOrder']
 }
 
 void gcss`
-	#thumo-playlist-widget {
+	#thumo-playlist-grid {
 		&, * { box-sizing: border-box; }
 		width: 100%;
 		padding: 24px;
