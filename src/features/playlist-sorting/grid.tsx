@@ -3,10 +3,12 @@ import { useSelector } from '@xstate/store-react'
 import { store, type Config } from '@/store'
 import { log } from '@/utils'
 
-let cells: HTMLElement[] = []
+type PlGridElement = HTMLElement & { dataset: { id: string } }
 
-const sortElIds = (els: HTMLElement[], order: Config['plOrder']) => {
-	const elIds = new Set(els.map(e => e.id))
+let cells: PlGridElement[] = []
+
+const sortElIds = (els: PlGridElement[], order: Config['plOrder']) => {
+	const elIds = new Set(els.map(e => e.dataset.id))
 	const ordered = new Set(order.flat())
 	const colCount = Math.max(...order.map(r => r.length))
 
@@ -26,11 +28,11 @@ const sortElIds = (els: HTMLElement[], order: Config['plOrder']) => {
 
 export const PlaylistGrid = ({ origPlContainer }: { origPlContainer: HTMLElement }) => {
 	const cfg = useSelector(store, state => state.context)
-	const [plEls, setPlEls] = useState<HTMLElement[]>([])
+	const [plEls, setPlEls] = useState<PlGridElement[]>([])
 
 	useEffect(() => {
 		const syncPlEls = () => {
-			const pls = [...origPlContainer.querySelectorAll<HTMLElement>('ytd-rich-item-renderer')]
+			const pls = [...origPlContainer.querySelectorAll<PlGridElement>('ytd-rich-item-renderer')]
 			log('Syncing playlists with grid:', pls.length)
 			pls.forEach(assignPlId)
 			setPlEls(pls)
@@ -73,7 +75,7 @@ export const PlaylistGrid = ({ origPlContainer }: { origPlContainer: HTMLElement
 	)
 }
 
-const getClosestCell = (pl: HTMLDivElement) => {
+const getClosestCell = (pl: PlGridElement) => {
 	const rect = pl.getBoundingClientRect()
 	const plCenterX = rect.left + rect.width / 2
 	const plCenterY = rect.top + rect.height / 2
@@ -83,10 +85,10 @@ const getClosestCell = (pl: HTMLDivElement) => {
 		const cellCenterY = cellRect.top + cellRect.height / 2
 		const dist = Math.hypot(plCenterX - cellCenterX, plCenterY - cellCenterY)
 		return dist < closest.dist ? { cell, dist } : closest
-	}, { cell: null as HTMLElement | null, dist: Infinity }).cell
+	}, { cell: null as PlGridElement | null, dist: Infinity }).cell
 }
 
-const Playlist = ({ el, plOrder }: { el: HTMLElement, plOrder: Config['plOrder'] }) => {
+const Playlist = ({ el, plOrder }: { el: PlGridElement, plOrder: Config['plOrder'] }) => {
 	const ref = useRef<HTMLDivElement>(null)
 	useEffect(() => ref.current?.replaceChildren(el), [el])
 
@@ -103,7 +105,7 @@ const Playlist = ({ el, plOrder }: { el: HTMLElement, plOrder: Config['plOrder']
 		}
 
 		log('Drag started:', el.dataset.id)
-		const pl = e.currentTarget as HTMLDivElement
+		const pl = e.currentTarget as PlGridElement
 		const rect = pl.getBoundingClientRect()
 		const offsetX = e.clientX - rect.left
 		const offsetY = e.clientY - rect.top
@@ -113,11 +115,11 @@ const Playlist = ({ el, plOrder }: { el: HTMLElement, plOrder: Config['plOrder']
 		pl.parentElement!.dataset.dragSource = ''
 		pl.style.width = `${pl.offsetWidth}px`
 		pl.setPointerCapture(e.pointerId)
-		cells = [...document.querySelectorAll<HTMLElement>('#thumo-playlist-grid .cell')]
+		cells = [...document.querySelectorAll<PlGridElement>('#thumo-playlist-grid .cell')]
 	}
 
 	const handlePointerMove = (e: React.PointerEvent) => {
-		const pl = e.currentTarget as HTMLDivElement
+		const pl = e.currentTarget as PlGridElement
 		if (!('dragging' in pl.dataset)) return
 
 		// prevent accidental drag on click
@@ -141,7 +143,7 @@ const Playlist = ({ el, plOrder }: { el: HTMLElement, plOrder: Config['plOrder']
 	}
 
 	const handlePointerUp = (e: React.PointerEvent) => {
-		const pl = e.currentTarget as HTMLDivElement
+		const pl = e.currentTarget as PlGridElement
 		if (skipPlOpenRef.current) return (skipPlOpenRef.current = false)
 		if (!('dragging' in pl.dataset)) return
 		if (!pl.style.position) return open(pl.querySelector('a')!.href, e.button === 1 ? '_blank' : '_self')
@@ -151,10 +153,10 @@ const Playlist = ({ el, plOrder }: { el: HTMLElement, plOrder: Config['plOrder']
 		const dropCell = getClosestCell(pl)
 		if (dropCell && dropCell !== sourceCell) {
 			store.trigger.setPlOrder({ plOrder })
-			store.trigger.assignPlToCell({ plId: pl.dataset.id!, cellId: dropCell.dataset.id! })
+			store.trigger.assignPlToCell({ plId: pl.dataset.id, cellId: dropCell.dataset.id })
 			store.trigger.assignPlToCell({ plId: '', cellId: sourceCell.dataset.id! })
-			const swapPl = dropCell.firstElementChild as HTMLDivElement | null
-			if (swapPl) store.trigger.assignPlToCell({ plId: swapPl.dataset.id!, cellId: sourceCell.dataset.id! })
+			const swapPl = dropCell.firstElementChild as PlGridElement | null
+			if (swapPl) store.trigger.assignPlToCell({ plId: swapPl.dataset.id, cellId: sourceCell.dataset.id! })
 		}
 
 		pl.style.cssText = ''
