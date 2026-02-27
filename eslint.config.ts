@@ -57,7 +57,7 @@ export default defineConfig([
 			'@stylistic/eol-last': ['error', 'never'],
 			'@stylistic/max-statements-per-line': 'off',
 			'@stylistic/multiline-ternary': 'off',
-			'@stylistic/exp-list-style': 'error',
+			'@stylistic/comma-dangle': ['error', 'only-multiline'],
 			'@stylistic/jsx-indent-props': ['error', 'tab'],
 			'@stylistic/jsx-one-expression-per-line': 'off',
 			'@stylistic/jsx-tag-spacing': ['error', { beforeClosing: 'never', beforeSelfClosing: 'never' }],

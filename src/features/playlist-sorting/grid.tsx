@@ -5,9 +5,27 @@ import { log } from '@/utils'
 
 let cells: HTMLElement[] = []
 
+const sortElIds = (els: HTMLElement[], order: Config['plOrder']) => {
+	const elIds = new Set(els.map(e => e.id))
+	const ordered = new Set(order.flat())
+	const colCount = Math.max(...order.map(r => r.length))
+
+	const remaining = Array.from(elIds).filter(id => !ordered.has(id))
+	let remIdx = 0
+
+	const sorted = order.map(row =>
+		Array.from({ length: colCount }, (_, col) =>
+			elIds.has(row[col]) ? row[col] : remaining.at(remIdx++) ?? '')
+	)
+
+	while (remIdx < remaining.length)
+		sorted.push(Array.from({ length: colCount }, () => remaining.at(remIdx++) ?? ''))
+
+	return sorted
+}
+
 export const PlaylistGrid = ({ origPlContainer }: { origPlContainer: HTMLElement }) => {
 	const cfg = useSelector(store, state => state.context)
-	const cellCount = cfg.plGrid.cols * cfg.plGrid.rows
 	const [plEls, setPlEls] = useState<HTMLElement[]>([])
 
 	useEffect(() => {
@@ -40,20 +58,19 @@ export const PlaylistGrid = ({ origPlContainer }: { origPlContainer: HTMLElement
 		return () => observer.disconnect()
 	}, [origPlContainer])
 
-	const plOrder = Array.from({ length: cellCount }).reduce<string[]>((acc, _, i) => (
-		acc.push((cfg.plOrder[i]
-			? plEls.find(el => el.dataset.id === cfg.plOrder[i])
-			: plEls.find(el => !acc.includes(el.dataset.id!) && !cfg.plOrder.includes(el.dataset.id!)))?.dataset.id ?? ''), acc
-	), [])
+	const sortedIds = sortElIds(plEls, cfg.plOrder)
+	log('Playlist grid rendered with order:', sortedIds)
 
-	log('Playlist grid rendered with order:', plOrder)
-
-	return plOrder.map((plId, i) => {
-		const el = plEls.find(p => p.dataset.id === plId)
-		return <div className="cell" key={i} data-id={i}>
-			{el && <Playlist el={el} plOrder={plOrder}/>}
-		</div>
-	})
+	return Array.from({ length: cfg.plGrid.rows }, (_, rowIdx) =>
+		Array.from({ length: cfg.plGrid.cols }, (_, colIdx) => {
+			const plId = sortedIds[rowIdx]?.[colIdx]
+			const el = plId ? plEls.find(e => e.dataset.id === plId) : null
+			const cellId = `${rowIdx}-${colIdx}`
+			return <div className="cell" key={cellId} data-id={cellId}>
+				{el && <Playlist el={el} plOrder={cfg.plOrder}/>}
+			</div>
+		})
+	)
 }
 
 const getClosestCell = (pl: HTMLDivElement) => {
@@ -130,13 +147,14 @@ const Playlist = ({ el, plOrder }: { el: HTMLElement, plOrder: Config['plOrder']
 		if (!pl.style.position) return open(pl.querySelector('a')!.href, e.button === 1 ? '_blank' : '_self')
 
 		log('Dropped:', el.dataset.id)
+		const sourceCell = pl.parentElement!
 		const dropCell = getClosestCell(pl)
-		if (dropCell && dropCell !== pl.parentElement) {
+		if (dropCell && dropCell !== sourceCell) {
 			store.trigger.setPlOrder({ plOrder })
-			store.trigger.assignPlToCell({ plId: pl.dataset.id!, cellId: Number(dropCell.dataset.id) })
-			store.trigger.assignPlToCell({ plId: '', cellId: Number(pl.parentElement!.dataset.id) })
+			store.trigger.assignPlToCell({ plId: pl.dataset.id!, cellId: dropCell.dataset.id! })
+			store.trigger.assignPlToCell({ plId: '', cellId: sourceCell.dataset.id! })
 			const swapPl = dropCell.firstElementChild as HTMLDivElement | null
-			if (swapPl) store.trigger.assignPlToCell({ plId: swapPl.dataset.id!, cellId: Number(pl.parentElement!.dataset.id) })
+			if (swapPl) store.trigger.assignPlToCell({ plId: swapPl.dataset.id!, cellId: sourceCell.dataset.id! })
 		}
 
 		pl.style.cssText = ''

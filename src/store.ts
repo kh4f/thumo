@@ -2,7 +2,7 @@ import { createStore } from '@xstate/store-react'
 import { log } from '@/utils'
 
 export interface Config {
-	plOrder: string[]
+	plOrder: string[][]
 	plGrid: { cols: number, rows: number, gap: number }
 }
 
@@ -11,12 +11,21 @@ export const store = createStore({
 	on: {
 		set: (ctx, e: { config: Config }) => ({ ...ctx, ...e.config }),
 		setPlOrder: (ctx, e: { plOrder: Config['plOrder'] }) => ({ ...ctx, plOrder: e.plOrder }),
-		assignPlToCell: (ctx, e: { plId: string, cellId: number }) => {
-			log(`Assigning playlist '${e.plId}' to cell '${e.cellId}'`)
-			while (e.cellId > ctx.plOrder.length) ctx.plOrder.push('')
-			ctx.plOrder[e.cellId] = e.plId
-			const lastValidIdx = ctx.plOrder.findLastIndex(Boolean)
-			return { ...ctx, plOrder: ctx.plOrder.slice(0, lastValidIdx + 1) }
+		assignPlToCell: (ctx, e: { plId: string, cellId: string }) => {
+			log(`Assigning playlist '${e.plId}' to cell [${e.cellId}]`)
+			const [row, col] = e.cellId.split('-').map(Number)
+			while (row > ctx.plOrder.length) ctx.plOrder.push([])
+			while (col > ctx.plOrder[row].length) ctx.plOrder[row].push('')
+			ctx.plOrder[row][col] = e.plId
+			return { ...ctx, plOrder: ctx.plOrder }
+		},
+		trimPlOrder: ctx => {
+			for (const row of ctx.plOrder)
+				while (row.length > 0 && !row[row.length - 1]) row.pop()
+			while (ctx.plOrder.length > 0 && !ctx.plOrder[ctx.plOrder.length - 1].length)
+				ctx.plOrder.pop()
+			log('Trimmed playlist order matrix:', ctx.plOrder)
+			return { ...ctx, plOrder: ctx.plOrder }
 		},
 	},
 })
