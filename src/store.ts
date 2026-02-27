@@ -7,7 +7,7 @@ export interface Config {
 }
 
 export const store = createStore({
-	context: { plOrder: [], plGrid: { cols: 7, rows: 3, gap: 12 } } as Config,
+	context: { plOrder: [[]], plGrid: { cols: 7, rows: 3, gap: 12 } } as Config,
 	on: {
 		set: (ctx, e: { config: Config }) => ({ ...ctx, ...e.config }),
 		setPlOrder: (ctx, e: { plOrder: Config['plOrder'] }) => ({ ...ctx, plOrder: e.plOrder }),

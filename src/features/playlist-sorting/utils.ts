@@ -9,10 +9,11 @@ export const assignPlId = (el: HTMLElement) => {
 	el.dataset.id = plId
 }
 
-export const sortElIds = (els: PlGridElement[], order: Config['plOrder']) => {
+export const sortElIds = (els: PlGridElement[], order: Config['plOrder'], colsFallback: number) => {
 	const elIds = new Set(els.map(e => e.dataset.id))
 	const ordered = new Set(order.flat())
-	const colCount = Math.max(...order.map(r => r.length))
+	let colCount = Math.max(0, ...order.map(r => r.length))
+	colCount ||= colsFallback
 
 	const remaining = Array.from(elIds).filter(id => !ordered.has(id))
 	let remIdx = 0

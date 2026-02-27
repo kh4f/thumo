@@ -35,7 +35,7 @@ export const PlaylistGrid = ({ origPlContainer }: { origPlContainer: HTMLElement
 		return () => observer.disconnect()
 	}, [origPlContainer])
 
-	const sortedIds = sortElIds(plEls, cfg.plOrder)
+	const sortedIds = sortElIds(plEls, cfg.plOrder, cfg.plGrid.cols)
 	log('Playlist grid rendered with order:', sortedIds)
 
 	return Array.from({ length: cfg.plGrid.rows }, (_, rowIdx) =>
