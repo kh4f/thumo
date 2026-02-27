@@ -44,7 +44,7 @@ export const PlaylistGrid = ({ origPlContainer }: { origPlContainer: HTMLElement
 			const el = plId ? plEls.find(e => e.dataset.id === plId) : null
 			const cellId = `${rowIdx}-${colIdx}`
 			return <div className="cell" key={cellId} data-id={cellId}>
-				{el && <Playlist el={el} plOrder={cfg.plOrder}/>}
+				{el && <Playlist el={el} plOrder={sortedIds}/>}
 			</div>
 		})
 	)
