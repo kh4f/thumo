@@ -27,6 +27,7 @@ export const store = createStore({
 			log('Trimmed playlist order matrix:', ctx.plOrder)
 			return { ...ctx, plOrder: ctx.plOrder }
 		},
+		resetPlOrder: ctx => ({ ...ctx, plOrder: [] }),
 	},
 })
 
