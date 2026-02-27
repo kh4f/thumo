@@ -2,29 +2,11 @@ import { useEffect, useRef, useState } from 'react'
 import { useSelector } from '@xstate/store-react'
 import { store, type Config } from '@/store'
 import { log } from '@/utils'
+import { assignPlId, getClosestCell, sortElIds } from './utils'
 
-type PlGridElement = HTMLElement & { dataset: { id: string } }
+export type PlGridElement = HTMLElement & { dataset: { id: string } }
 
 let cells: PlGridElement[] = []
-
-const sortElIds = (els: PlGridElement[], order: Config['plOrder']) => {
-	const elIds = new Set(els.map(e => e.dataset.id))
-	const ordered = new Set(order.flat())
-	const colCount = Math.max(...order.map(r => r.length))
-
-	const remaining = Array.from(elIds).filter(id => !ordered.has(id))
-	let remIdx = 0
-
-	const sorted = order.map(row =>
-		Array.from({ length: colCount }, (_, col) =>
-			elIds.has(row[col]) ? row[col] : remaining.at(remIdx++) ?? '')
-	)
-
-	while (remIdx < remaining.length)
-		sorted.push(Array.from({ length: colCount }, () => remaining.at(remIdx++) ?? ''))
-
-	return sorted
-}
 
 export const PlaylistGrid = ({ origPlContainer }: { origPlContainer: HTMLElement }) => {
 	const cfg = useSelector(store, state => state.context)
@@ -36,13 +18,6 @@ export const PlaylistGrid = ({ origPlContainer }: { origPlContainer: HTMLElement
 			log('Syncing playlists with grid:', pls.length)
 			pls.forEach(assignPlId)
 			setPlEls(pls)
-		}
-
-		const assignPlId = (el: HTMLElement) => {
-			const plUrl = el.querySelector('a')!.getAttribute('href')!
-			const plId = new URL(plUrl, location.origin).searchParams.get('list')
-			if (!plId) return log('Failed to extract playlist ID from element:', el)
-			el.dataset.id = plId
 		}
 
 		syncPlEls()
@@ -73,19 +48,6 @@ export const PlaylistGrid = ({ origPlContainer }: { origPlContainer: HTMLElement
 			</div>
 		})
 	)
-}
-
-const getClosestCell = (pl: PlGridElement) => {
-	const rect = pl.getBoundingClientRect()
-	const plCenterX = rect.left + rect.width / 2
-	const plCenterY = rect.top + rect.height / 2
-	return cells.reduce((closest, cell) => {
-		const cellRect = cell.getBoundingClientRect()
-		const cellCenterX = cellRect.left + cellRect.width / 2
-		const cellCenterY = cellRect.top + cellRect.height / 2
-		const dist = Math.hypot(plCenterX - cellCenterX, plCenterY - cellCenterY)
-		return dist < closest.dist ? { cell, dist } : closest
-	}, { cell: null as PlGridElement | null, dist: Infinity }).cell
 }
 
 const Playlist = ({ el, plOrder }: { el: PlGridElement, plOrder: Config['plOrder'] }) => {
@@ -135,7 +97,7 @@ const Playlist = ({ el, plOrder }: { el: PlGridElement, plOrder: Config['plOrder
 		pl.style.left = `${e.clientX - offsetRef.current.offsetX}px`
 		pl.style.top = `${e.clientY - offsetRef.current.offsetY}px`
 
-		const dropCell = getClosestCell(pl)
+		const dropCell = getClosestCell(pl, cells)
 		cells.forEach(cell => {
 			if (cell === dropCell) cell.dataset.dropTarget = ''
 			else delete cell.dataset.dropTarget
@@ -150,7 +112,7 @@ const Playlist = ({ el, plOrder }: { el: PlGridElement, plOrder: Config['plOrder
 
 		log('Dropped:', el.dataset.id)
 		const sourceCell = pl.parentElement!
-		const dropCell = getClosestCell(pl)
+		const dropCell = getClosestCell(pl, cells)
 		if (dropCell && dropCell !== sourceCell) {
 			store.trigger.setPlOrder({ plOrder })
 			store.trigger.assignPlToCell({ plId: pl.dataset.id, cellId: dropCell.dataset.id })
