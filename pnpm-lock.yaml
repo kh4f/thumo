@@ -27,7 +27,7 @@ importers:
         specifier: ^6.10.1
         version: 6.10.1(jiti@2.6.1)
       '@types/node':
-        specifier: ^25.3.1
+        specifier: ^25.3.2
         version: 25.3.3
       '@types/react':
         specifier: ^19.2.14
