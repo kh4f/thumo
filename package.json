@@ -22,7 +22,7 @@
 		"@eslint-react/eslint-plugin": "^2.13.0",
 		"@eslint/js": "^10.0.1",
 		"@rawstyle/vite": "^0.3.2",
-		"@stylistic/eslint-plugin": "^5.9.0",
+		"@stylistic/eslint-plugin": "^5.10.0",
 		"@types/chrome": "^0.1.37",
 		"@types/eslint-plugin-jsx-a11y": "^6.10.1",
 		"@types/node": "^25.3.5",
