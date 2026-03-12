@@ -25,7 +25,7 @@
 		"@stylistic/eslint-plugin": "^5.10.0",
 		"@types/chrome": "^0.1.37",
 		"@types/eslint-plugin-jsx-a11y": "^6.10.1",
-		"@types/node": "^25.3.5",
+		"@types/node": "^25.4.0",
 		"@types/react": "^19.2.14",
 		"@types/react-dom": "^19.2.3",
 		"@vitejs/plugin-react": "^5.1.4",
