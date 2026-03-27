@@ -15,8 +15,8 @@ importers:
         specifier: ^10.0.1
         version: 10.0.1(eslint@9.39.4(jiti@2.6.1))
       '@rawstyle/vite':
-        specifier: ^0.3.2
-        version: 0.3.2(rawstyle@0.5.0)(rolldown-vite@7.3.1(@types/node@25.5.0)(esbuild@0.27.3)(jiti@2.6.1)(tsx@4.21.0))
+        specifier: ^0.4.0
+        version: 0.4.0(rawstyle@0.5.0)(rolldown-vite@7.3.1(@types/node@25.5.0)(esbuild@0.27.3)(jiti@2.6.1)(tsx@4.21.0))
       '@stylistic/eslint-plugin':
         specifier: ^5.10.0
         version: 5.10.0(eslint@9.39.4(jiti@2.6.1))
@@ -619,10 +619,10 @@ packages:
   '@quansync/fs@1.0.0':
     resolution: {integrity: sha512-4TJ3DFtlf1L5LDMaM6CanJ/0lckGNtJcMjQ1NAV6zDmA0tEHKZtxNKin8EgPaVX1YzljbxckyT2tJrpQKAtngQ==}
 
-  '@rawstyle/vite@0.3.2':
-    resolution: {integrity: sha512-85Ijiis9RD7uhwXeX/Bo3S7RBXv/GWXzWFxP/T7n7E1PkhRqjdLI12s/RqMJ2Jl7LT1deU9ayE3IuMkD0S45Ew==}
+  '@rawstyle/vite@0.4.0':
+    resolution: {integrity: sha512-wehYLCZffP024JrHxcBbln7R/E2SLLMMs0ai6YvtLwwoWDO9Vw3bjfpjyZlsdox3h4k6/i3gCmlfXeja91KUNg==}
     peerDependencies:
-      rawstyle: '>=0.4'
+      rawstyle: '>=0.6'
       rolldown-vite: '*'
 
   '@rolldown/binding-android-arm64@1.0.0-beta.53':
@@ -3001,7 +3001,7 @@ snapshots:
     dependencies:
       quansync: 1.0.0
 
-  '@rawstyle/vite@0.3.2(rawstyle@0.5.0)(rolldown-vite@7.3.1(@types/node@25.5.0)(esbuild@0.27.3)(jiti@2.6.1)(tsx@4.21.0))':
+  '@rawstyle/vite@0.4.0(rawstyle@0.5.0)(rolldown-vite@7.3.1(@types/node@25.5.0)(esbuild@0.27.3)(jiti@2.6.1)(tsx@4.21.0))':
     dependencies:
       rawstyle: 0.5.0
       rolldown-vite: 7.3.1(@types/node@25.5.0)(esbuild@0.27.3)(jiti@2.6.1)(tsx@4.21.0)
