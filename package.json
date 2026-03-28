@@ -40,7 +40,7 @@
 		"rawstyle-eslint": "^0.1.2",
 		"react": "^19.2.4",
 		"react-dom": "^19.2.4",
-		"relion": "^0.39.2",
+		"relion": "^0.44.1",
 		"tsdown": "^0.20.3",
 		"tsx": "^4.21.0",
 		"typescript": "^5.9.3",
