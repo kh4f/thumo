@@ -1,5 +1,6 @@
 import type { UserConfig } from 'tsdown'
-import react from '@vitejs/plugin-react'
+import react, { reactCompilerPreset } from '@vitejs/plugin-react'
+import babel from '@rolldown/plugin-babel'
 import rawstyle from '@rawstyle/vite'
 
 const isProd = process.argv.includes('--prod')
@@ -10,9 +11,6 @@ export default {
 	copy: ['src/manifest.json', 'src/assets'],
 	minify: isProd,
 	sourcemap: isProd ? false : 'inline',
-	inlineOnly: false,
-	plugins: [
-		react({ babel: { plugins: ['babel-plugin-react-compiler'] } }),
-		rawstyle(),
-	],
+	deps: { onlyBundle: false },
+	plugins: [react(), babel({ presets: [reactCompilerPreset()] }), rawstyle()],
 } satisfies UserConfig
