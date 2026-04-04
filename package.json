@@ -14,7 +14,7 @@
 		"build:watch": "tsdown --watch src",
 		"build:prod": "tsdown --prod",
 		"lint": "eslint",
-		"release": "relion -b src/manifest.json"
+		"release": "bunx relion -b src/manifest.json"
 	},
 	"devDependencies": {
 		"@eslint-react/eslint-plugin": "^2.13.0",
@@ -38,7 +38,6 @@
 		"rawstyle-eslint": "^0.1.2",
 		"react": "^19.2.4",
 		"react-dom": "^19.2.4",
-		"relion": "^0.45.0",
 		"tsdown": "^0.20.3",
 		"typescript": "^5.9.3",
 		"typescript-eslint": "^8.57.2"
