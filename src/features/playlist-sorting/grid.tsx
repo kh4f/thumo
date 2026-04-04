@@ -17,7 +17,7 @@ export const PlaylistGrid = ({ origPlContainer }: { origPlContainer: HTMLElement
 			const pls = [...origPlContainer.querySelectorAll<PlGridElement>('ytd-rich-item-renderer')]
 			log('Syncing playlists with grid:', pls.length)
 			pls.forEach(assignPlId)
-			setPlEls(pls)
+			setPlEls(pls) // eslint-disable-line @eslint-react/set-state-in-effect
 		}
 
 		syncPlEls()
