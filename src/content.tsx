@@ -1,7 +1,8 @@
 import { mountThumbnailWidget, mountPlaylistGrid } from '@/features'
 import { log, injectCss, getPageType } from '@/utils'
-import type { PageType } from '@/types'
 import { hydrateStore } from '@/store'
+
+export type PageType = 'home' | 'watch' | 'playlists' | 'unknown'
 
 log('Content script is running')
 void injectCss()

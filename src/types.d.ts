@@ -1,1 +1,0 @@
-export type PageType = 'home' | 'watch' | 'playlists' | 'unknown'

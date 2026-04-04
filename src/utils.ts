@@ -1,4 +1,4 @@
-import type { PageType } from '@/types'
+import type { PageType } from '@/content'
 
 export const log = (...args: unknown[]) => console.log('%cTHUMO', `
 	color: #00ccff;
