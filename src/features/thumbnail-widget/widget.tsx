@@ -8,7 +8,7 @@ export const ThumbnailWidget = ({ url }: { url: string }) => {
 	</a>
 }
 
-void gcss`
+void css`
 	.watch-root-element #secondary {
 		display: flex;
 		flex-direction: column;

@@ -41,7 +41,7 @@ const onTabLoad = async (tabInfo: chrome.tabs.Tab) => {
 	}
 }
 
-void gcss`
+void css`
 	body[data-page-type="home"] ytd-rich-item-renderer {
 		width: 300px;
 	}

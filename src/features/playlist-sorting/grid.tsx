@@ -140,7 +140,7 @@ const Playlist = ({ el, plOrder }: { el: PlGridElement, plOrder: Config['plOrder
 	></div>
 }
 
-void gcss`
+void css`
 	#thumo-playlist-grid {
 		&, * { box-sizing: border-box; }
 		width: 100%;
