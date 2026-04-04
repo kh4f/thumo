@@ -10,7 +10,7 @@ export const log = (...args: unknown[]) => console.log('%cTHUMO', `
 	`, ...args)
 
 export const injectCss = async () => {
-	const cssUrl = chrome.runtime.getURL('content.css')
+	const cssUrl = chrome.runtime.getURL('style.css')
 	const response = await fetch(cssUrl)
 	const css = await response.text()
 	const styleSheet = new CSSStyleSheet()
