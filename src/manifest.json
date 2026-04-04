@@ -9,5 +9,5 @@
 	"host_permissions": ["https://www.youtube.com/*"],
 	"background": { "service_worker": "background.js" },
 	"content_scripts": [{ "matches": ["https://www.youtube.com/*"], "js": ["content.js"] }],
-	"web_accessible_resources": [{ "matches": ["https://www.youtube.com/*"], "resources": ["content.css"] }]
+	"web_accessible_resources": [{ "matches": ["https://www.youtube.com/*"], "resources": ["style.css"] }]
 }
