@@ -8,14 +8,13 @@
 	"bugs": "https://github.com/kh4f/thumo/issues",
 	"homepage": "https://github.com/kh4f/thumo#readme",
 	"keywords": ["thumo", "thumo-extension", "chrome-extension", "youtube-thumbnails", "youtube-extension", "youtube"],
-	"relion": { "bumpFiles": ["package.json", "src/manifest.json"] },
 	"type": "module",
 	"scripts": {
 		"build": "tsdown",
 		"build:watch": "tsdown --watch src",
 		"build:prod": "tsdown --prod",
 		"lint": "eslint",
-		"release": "relion"
+		"release": "relion -b src/manifest.json"
 	},
 	"devDependencies": {
 		"@eslint-react/eslint-plugin": "^2.13.0",
@@ -39,7 +38,7 @@
 		"rawstyle-eslint": "^0.1.2",
 		"react": "^19.2.4",
 		"react-dom": "^19.2.4",
-		"relion": "^0.39.2",
+		"relion": "^0.45.0",
 		"tsdown": "^0.20.3",
 		"typescript": "^5.9.3",
 		"typescript-eslint": "^8.57.2"
