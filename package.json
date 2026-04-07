@@ -14,6 +14,7 @@
 		"build:watch": "tsdown --watch",
 		"build:prod": "tsdown --prod",
 		"lint": "eslint",
+		"typecheck": "tsc",
 		"release": "bunx relion -b src/manifest.json"
 	},
 	"devDependencies": {
