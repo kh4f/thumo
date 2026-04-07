@@ -1,11 +1,11 @@
 {
 	"compilerOptions": {
-		"moduleResolution": "bundler",
+		"noEmit": true,
+		"skipLibCheck": true,
 		"verbatimModuleSyntax": true,
-		"moduleDetection": "force",
-		"paths": { "@/*": ["./src/*"] },
 		"jsx": "react-jsx",
 		"types": ["chrome", "rawstyle/globals"],
+		"paths": { "@/*": ["./src/*"] },
 	},
 	"include": ["**/*.ts", "**/*.tsx"]
 }
